@@ -9,6 +9,7 @@ from dataclasses import dataclass, asdict
 import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
+import random
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -45,8 +46,11 @@ class GenerationConfig:
     quality: str = "auto"
     output_format: str = "png"
     resolution: str = "1024x1024"
-    batch_size: int = 10
-    max_workers: int = 5
+    batch_size: int = 3  # Réduit pour éviter les rate limits
+    max_workers: int = 2  # Réduit pour éviter les rate limits
+    retry_attempts: int = 5
+    base_delay: float = 2.0  # Délai de base entre les requêtes
+    max_delay: float = 60.0  # Délai maximum
 
 class WasteDatasetGenerator:
     """Générateur principal de dataset d'images de déchets"""
@@ -62,6 +66,10 @@ class WasteDatasetGenerator:
         
         self._setup_directories()
         self._load_configurations()
+        
+        # Compteur pour gérer les requêtes
+        self.request_count = 0
+        self.last_request_time = 0
     
     def _setup_directories(self):
         """Créer la structure de répertoires"""
@@ -176,7 +184,7 @@ class WasteDatasetGenerator:
         STYLE:
         - Photo haute résolution, très réaliste
         - Éclairage naturel et contrasté
-        - Netteté parfaite sur le déchet et le cube
+        - Netteté parfaite sur le déchet
         - Profondeur de champ naturelle
         - Couleurs vives et saturées
         - Style documentaire/scientifique
@@ -184,29 +192,62 @@ class WasteDatasetGenerator:
         
         return base_prompt.strip()
     
-    def generate_image_sync(self, prompt: str) -> Optional[str]:
-        """Générer une image de façon synchrone"""
-        try:
-            payload = {
-                "prompt": prompt,
-                "model": self.config.model,
-                "quality": self.config.quality
-            }
-            
-            headers = {
-                "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json"
-            }
-            
-            response = requests.post(self.api_url, json=payload, headers=headers)
-            response.raise_for_status()
-            
-            image_b64 = response.json()["data"][0]['b64_json']
-            return image_b64
-            
-        except Exception as e:
-            logger.error(f"Erreur génération image: {e}")
-            return None
+    def _wait_for_rate_limit(self):
+        """Attendre pour respecter les limites de taux"""
+        current_time = time.time()
+        time_since_last_request = current_time - self.last_request_time
+        
+        # Attendre au minimum le délai de base
+        if time_since_last_request < self.config.base_delay:
+            wait_time = self.config.base_delay - time_since_last_request
+            logger.info(f"Attente de {wait_time:.1f}s pour respecter les limites...")
+            time.sleep(wait_time)
+        
+        self.last_request_time = time.time()
+    
+    def generate_image_with_retry(self, prompt: str) -> Optional[str]:
+        """Générer une image avec retry et backoff exponentiel"""
+        for attempt in range(self.config.retry_attempts):
+            try:
+                # Attendre avant la requête
+                self._wait_for_rate_limit()
+                
+                payload = {
+                    "prompt": prompt,
+                    "model": self.config.model,
+                    "quality": self.config.quality
+                }
+                
+                headers = {
+                    "Authorization": f"Bearer {self.api_key}",
+                    "Content-Type": "application/json"
+                }
+                
+                response = requests.post(self.api_url, json=payload, headers=headers, timeout=60)
+                response.raise_for_status()
+                
+                image_b64 = response.json()["data"][0]['b64_json']
+                self.request_count += 1
+                logger.info(f"Image générée avec succès (requête #{self.request_count})")
+                return image_b64
+                
+            except requests.exceptions.HTTPError as e:
+                if e.response.status_code == 429:  # Too Many Requests
+                    delay = min(self.config.base_delay * (2 ** attempt) + random.uniform(0, 1), 
+                               self.config.max_delay)
+                    logger.warning(f"Rate limit atteint. Tentative {attempt + 1}/{self.config.retry_attempts}. "
+                                 f"Attente de {delay:.1f}s...")
+                    time.sleep(delay)
+                else:
+                    logger.error(f"Erreur HTTP {e.response.status_code}: {e}")
+                    break
+            except Exception as e:
+                logger.error(f"Erreur génération image (tentative {attempt + 1}): {e}")
+                if attempt < self.config.retry_attempts - 1:
+                    delay = min(self.config.base_delay * (2 ** attempt), self.config.max_delay)
+                    time.sleep(delay)
+        
+        return None
     
     def save_image(self, image_b64: str, metadata: Dict, filename: str) -> bool:
         """Sauvegarder l'image et ses métadonnées"""
@@ -257,9 +298,9 @@ class WasteDatasetGenerator:
         
         return variations
     
-    def generate_dataset(self, num_images_per_type: int = 50, 
-                        zones_filter: Optional[List[str]] = None) -> Dict[str, int]:
-        """Générer le dataset complet"""
+    def generate_dataset_sequential(self, num_images_per_type: int = 20, 
+                                   zones_filter: Optional[List[str]] = None) -> Dict[str, int]:
+        """Générer le dataset de façon séquentielle (plus stable)"""
         stats = {"total": 0, "success": 0, "failed": 0}
         
         zones_to_process = zones_filter or list(self.zones.keys())
@@ -276,93 +317,72 @@ class WasteDatasetGenerator:
                 # Générer les variations
                 variations = self.generate_variations(waste, zone)
                 
-                # Limiter le nombre d'images
+                # Mélanger et limiter le nombre d'images
+                random.shuffle(variations)
                 selected_variations = variations[:num_images_per_type]
                 
-                # Génération par batch
-                for i in range(0, len(selected_variations), self.config.batch_size):
-                    batch = selected_variations[i:i + self.config.batch_size]
-                    
-                    with ThreadPoolExecutor(max_workers=self.config.max_workers) as executor:
-                        futures = []
+                # Génération séquentielle
+                for i, variation in enumerate(selected_variations):
+                    try:
+                        prompt = self.generate_prompt(waste, zone, variation)
+                        filename = f"{zone_key}_{waste.name}_{i:04d}"
                         
-                        for j, variation in enumerate(batch):
-                            prompt = self.generate_prompt(waste, zone, variation)
-                            filename = f"{zone_key}_{waste.name}_{i+j:04d}"
-                            
-                            metadata = {
-                                'waste_type': waste.name,
-                                'zone': zone_key,
-                                'category': waste.category,
-                                'variations': variation,
-                                'prompt': prompt
-                            }
-                            
-                            future = executor.submit(self._process_single_image, 
-                                                   prompt, metadata, filename)
-                            futures.append(future)
+                        metadata = {
+                            'waste_type': waste.name,
+                            'zone': zone_key,
+                            'category': waste.category,
+                            'variations': variation,
+                            'prompt': prompt
+                        }
                         
-                        # Attendre les résultats
-                        for future in as_completed(futures):
-                            success = future.result()
-                            stats["total"] += 1
-                            if success:
-                                stats["success"] += 1
-                            else:
-                                stats["failed"] += 1
-                    
-                    # Pause entre les batches
-                    time.sleep(1)
+                        logger.info(f"Génération image {i+1}/{len(selected_variations)} pour {waste.name}")
+                        
+                        image_b64 = self.generate_image_with_retry(prompt)
+                        stats["total"] += 1
+                        
+                        if image_b64 and self.save_image(image_b64, metadata, filename):
+                            stats["success"] += 1
+                            logger.info(f"✓ Image {filename} sauvegardée")
+                        else:
+                            stats["failed"] += 1
+                            logger.error(f"✗ Échec génération {filename}")
+                        
+                        # Pause entre chaque image
+                        time.sleep(1)
+                        
+                    except KeyboardInterrupt:
+                        logger.info("Arrêt demandé par l'utilisateur")
+                        self._save_generation_stats(stats)
+                        return stats
+                    except Exception as e:
+                        logger.error(f"Erreur lors du traitement de {filename}: {e}")
+                        stats["total"] += 1
+                        stats["failed"] += 1
         
         # Sauvegarder les statistiques
         self._save_generation_stats(stats)
         return stats
     
-    def _process_single_image(self, prompt: str, metadata: Dict, filename: str) -> bool:
-        """Traiter une seule image"""
-        try:
-            image_b64 = self.generate_image_sync(prompt)
-            if image_b64:
-                return self.save_image(image_b64, metadata, filename)
-            return False
-        except Exception as e:
-            logger.error(f"Erreur traitement {filename}: {e}")
-            return False
-    
     def _save_generation_stats(self, stats: Dict[str, int]):
         """Sauvegarder les statistiques de génération"""
         stats_path = self.output_dir / "generation_stats.json"
         stats['timestamp'] = datetime.now().isoformat()
+        stats['request_count'] = self.request_count
         
         with open(stats_path, 'w') as f:
             json.dump(stats, f, indent=2)
-    
-    def export_annotations(self, format_type: str = "coco") -> str:
-        """Exporter les annotations dans différents formats"""
-        if format_type == "coco":
-            return self._export_coco_format()
-        elif format_type == "yolo":
-            return self._export_yolo_format()
-        else:
-            raise ValueError(f"Format non supporté: {format_type}")
-    
-    def _export_coco_format(self) -> str:
-        """Exporter au format COCO"""
-        # Implementation pour format COCO
-        pass
-    
-    def _export_yolo_format(self) -> str:
-        """Exporter au format YOLO"""
-        # Implementation pour format YOLO
-        pass
+        
+        logger.info(f"Statistiques sauvegardées: {stats}")
 
 # Exemple d'utilisation
 if __name__ == "__main__":
-    # Configuration
+    # Configuration optimisée pour éviter les rate limits
     config = GenerationConfig(
-        batch_size=5,
-        max_workers=3,
-        resolution="1024x1024"
+        batch_size=1,  # Une seule image à la fois
+        max_workers=1,  # Un seul worker
+        retry_attempts=5,
+        base_delay=3.0,  # 3 secondes entre les requêtes
+        max_delay=60.0
     )
     
     # Créer le générateur
@@ -370,15 +390,21 @@ if __name__ == "__main__":
     
     # Générer le dataset
     print("Début de la génération du dataset...")
-    stats = generator.generate_dataset(
-        num_images_per_type=20,  # 20 images par type de déchet
-        zones_filter=["residential", "commercial", "industrial"]  # Optionnel: filtrer les zones
-    )
+    print("Appuyez sur Ctrl+C pour arrêter proprement")
     
-    print(f"Génération terminée:")
-    print(f"  Total: {stats['total']}")
-    print(f"  Succès: {stats['success']}")
-    print(f"  Échecs: {stats['failed']}")
-    
-    # Exporter les annotations
-    # generator.export_annotations("coco")
+    try:
+        stats = generator.generate_dataset_sequential(
+            num_images_per_type=5,  # Commencer avec moins d'images pour tester
+            zones_filter=["residential"]  # Commencer avec une seule zone
+        )
+        
+        print(f"\nGénération terminée:")
+        print(f"  Total: {stats['total']}")
+        print(f"  Succès: {stats['success']}")
+        print(f"  Échecs: {stats['failed']}")
+        print(f"  Taux de succès: {stats['success']/stats['total']*100:.1f}%" if stats['total'] > 0 else "")
+        
+    except KeyboardInterrupt:
+        print("\nArrêt demandé par l'utilisateur")
+    except Exception as e:
+        print(f"Erreur: {e}")
