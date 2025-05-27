@@ -1,0 +1,5 @@
+dotenv
+requests
+huggingface_hub
+datasets
+pandas
