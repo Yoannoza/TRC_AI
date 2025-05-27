@@ -215,6 +215,6 @@ if __name__ == "__main__":
     uploader.login_hf(HF_TOKEN)
     
     # Upload le dataset
-    uploader.upload_dataset(private=True)  # Mettre True pour un dataset privé
+    uploader.upload_dataset(private=False)  # Mettre True pour un dataset privé
     
     print(f"Dataset disponible sur: https://huggingface.co/datasets/{REPO_NAME}")
