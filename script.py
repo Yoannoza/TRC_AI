@@ -395,7 +395,7 @@ if __name__ == "__main__":
     try:
         stats = generator.generate_dataset_sequential(
             num_images_per_type=5,  # Commencer avec moins d'images pour tester
-            zones_filter=["residential"]  # Commencer avec une seule zone
+            zones_filter=["residential", "industrial", "commercial"]  # Commencer avec une seule zone
         )
         
         print(f"\nGénération terminée:")

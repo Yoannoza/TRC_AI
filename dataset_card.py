@@ -488,7 +488,7 @@ class GenerateurCarteDatasetComplet:
 
         *Généré le {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Taille du Dataset : {analysis['total_size_mb']:.1f} MB | Images : {analysis['total_images']:,}*
     """
-        return yaml_header + card_content
+        return card_content
 
     def _creer_tableau_distribution(self, counter: Counter, header1: str, header2: str) -> str:
         """Créer un tableau markdown à partir d'un objet Counter"""
