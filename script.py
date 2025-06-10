@@ -127,9 +127,14 @@ class WasteDatasetGenerator:
                           ["cylindrique"], ["330ml", "500ml"], ["neuf", "cabossé", "écrasé"]),
                 WasteConfig("carton", "ménager", "residential",
                           ["brun", "blanc"], ["carton ondulé", "carton simple"],
-                          ["boîte", "plat"], ["petit", "moyen", "grand"], ["neuf", "humide", "déchiré"])
+                          ["boîte", "plat"], ["petit", "moyen", "grand"], ["neuf", "humide", "déchiré"]),
+                WasteConfig("journal", "ménager", "residential", [""], [""], [""], [""], [""]),
+                WasteConfig("verre_alimentaire", "ménager", "residential", [""], [""], [""], [""], [""]),
+                WasteConfig("textile", "ménager", "residential", [""], [""], [""], [""], [""])
             ],
             "commercial": [
+                WasteConfig("papier_bureau", "recyclable", "commercial", [""], [""], [""], [""], [""]),
+                WasteConfig("emballage_alimentaire", "recyclable", "commercial", [""], [""], [""], [""], [""]),
                 WasteConfig("carton_emballage", "recyclable", "commercial",
                           ["brun", "blanc", "imprimé"], ["carton ondulé"],
                           ["boîte", "plat", "tube"], ["petit", "moyen", "grand", "très grand"],
@@ -144,6 +149,8 @@ class WasteDatasetGenerator:
                           ["neuf", "rouillé", "cabossé"])
             ],
             "industrial": [
+                WasteConfig("huile_moteur", "dangereux", "industrial", [""], [""], [""], [""], [""]),
+                WasteConfig("dechet_medical", "dangereux", "industrial", [""], [""], [""], [""], [""]),
                 WasteConfig("batterie", "dangereux", "industrial",
                           ["noir", "bleu", "rouge"], ["lithium", "plomb", "alcaline"],
                           ["cylindrique", "rectangulaire"], ["petit", "moyen", "grand"],
@@ -226,11 +233,27 @@ class WasteDatasetGenerator:
                 response = requests.post(self.api_url, json=payload, headers=headers, timeout=60)
                 response.raise_for_status()
                 
-                image_b64 = response.json()["data"][0]['b64_json']
+                data = response.json()["data"][0]
                 self.request_count += 1
-                logger.info(f"Image générée avec succès (requête #{self.request_count})")
-                return image_b64
+                # Vérifier si l'API renvoie du base64 directement
+                if 'b64_json' in data and data['b64_json']:
+                    return data['b64_json']
                 
+                # Sinon, récupérer l'image depuis l'URL et la convertir en base64
+                elif 'url' in data and data['url']:
+                    image_url = data['url']
+                    
+                    # Télécharger l'image
+                    img_response = requests.get(image_url)
+                    img_response.raise_for_status()
+                    
+                    # Convertir en base64
+                    image_b64 = base64.b64encode(img_response.content).decode('utf-8')
+                    return image_b64
+                
+                else:
+                    raise ValueError("L'API n'a renvoyé ni base64 ni URL valide")
+
             except requests.exceptions.HTTPError as e:
                 if e.response.status_code == 429:  # Too Many Requests
                     delay = min(self.config.base_delay * (2 ** attempt) + random.uniform(0, 1), 
@@ -394,7 +417,7 @@ if __name__ == "__main__":
     
     try:
         stats = generator.generate_dataset_sequential(
-            num_images_per_type=5,  # Commencer avec moins d'images pour tester
+            num_images_per_type=2,  # Commencer avec moins d'images pour tester
             zones_filter=["residential", "industrial", "commercial"]  # Commencer avec une seule zone
         )
         

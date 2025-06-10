@@ -92,67 +92,69 @@ class HuggingFaceUploader:
     
     def create_dataset_card(self) -> str:
         """Créer la carte du dataset"""
-        # Analyser les statistiques du dataset
-        metadata_files = list((self.dataset_path / "metadata").glob("*.json"))
-        
+        # Compter les vraies images
+        valid_images = 0
         waste_types = set()
-        zones = set()
-        categories = set()
         
-        for metadata_file in metadata_files:
-            with open(metadata_file, 'r', encoding='utf-8') as f:
-                metadata = json.load(f)
-            waste_types.add(metadata['waste_type'])
-            zones.add(metadata['zone'])
-            categories.add(metadata['category'])
+        for metadata_file in list((self.dataset_path / "metadata").glob("*.json")):
+            try:
+                with open(metadata_file, 'r', encoding='utf-8') as f:
+                    metadata = json.load(f)
+                
+                image_path = Path(metadata['image_path'])
+                if image_path.exists():
+                    valid_images += 1
+                    waste_types.add(metadata['waste_type'])
+            except:
+                continue
         
-        card = f"""
-# Dataset de Déchets pour Classification
+        train_count = int(0.8 * valid_images)
+        test_count = valid_images - train_count
+        
+        card = f"""---
+            dataset_info:
+            features:
+            - name: image
+                dtype: image
+            - name: waste_type
+                dtype: string
+            - name: category
+                dtype: string
+            splits:
+            - name: train
+                num_examples: {train_count}
+            - name: test
+                num_examples: {test_count}
+            task_categories:
+            - image-classification
+            tags:
+            - waste-classification
+            - synthetic-data
+            license: apache-2.0
+            ---
 
-## Description
-Ce dataset contient des images synthétiques de déchets générées par IA pour l'entraînement de modèles de classification et détection.
+            # Waste Classification Dataset
 
-## Statistiques
-- **Total d'images**: {len(metadata_files)}
-- **Types de déchets**: {len(waste_types)}
-- **Zones**: {len(zones)} 
-- **Catégories**: {len(categories)}
+            ## Description
+            Synthetic waste images for AI model training.
 
-## Types de déchets
-{', '.join(sorted(waste_types))}
+            ## Dataset Info
+            - **Total Images**: {valid_images}
+            - **Classes**: {len(waste_types)}
+            - **Split**: {train_count} train / {test_count} test
 
-## Zones
-{', '.join(sorted(zones))}
+            ## Classes
+            {', '.join(sorted(waste_types))}
 
-## Catégories
-{', '.join(sorted(categories))}
+            ## Usage
+            ```python
+            from datasets import load_dataset
+            dataset = load_dataset("{self.repo_name}")
+            ##License
 
-## Structure du dataset
-- `image`: Image du déchet
-- `waste_type`: Type de déchet
-- `zone`: Zone où le déchet a été trouvé
-- `category`: Catégorie du déchet
-- `color`: Couleur du déchet
-- `material`: Matériau du déchet
-- `shape`: Forme du déchet
-- `size`: Taille du déchet
-- `degradation`: État de dégradation
-- `environment`: Environnement
-- `lighting`: Conditions d'éclairage
-- `background`: Arrière-plan
-- `prompt`: Prompt utilisé pour la génération
-
-## Utilisation
-```python
-from datasets import load_dataset
-
-dataset = load_dataset("{self.repo_name}")
-```
-
-## Licence
-Ce dataset est généré synthétiquement et peut être utilisé pour la recherche et l'éducation.
-"""
-        return card.strip()
+            Apache 2.0 - Free for research and commercial use. 
+            """
+        return card
     
     def upload_dataset(self, private: bool = False):
         """Upload le dataset vers Hugging Face"""
