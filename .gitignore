@@ -2,3 +2,4 @@ dataset/
 env/
 .env
 waste_dataset/
+image_search_service.py
