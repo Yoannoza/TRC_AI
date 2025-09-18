@@ -2,4 +2,8 @@ dotenv
 requests
 huggingface_hub
 datasets
-pandas
+requests
+python-dotenv
+Pillow
+reportlab
+tqdm

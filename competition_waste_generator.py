@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """
-Générateur d'images de déchets pour compétition de robotique
-===========================================================
+Générateur d'images de déchets pour compétition de robotique - VERSION CORRIGÉE
+===============================================================================
 
 Génère des images de déchets via l'API Freepik pour une compétition de robotique.
 Organise les déchets en 3 catégories (Ménagers, Dangereux, Recyclables) 
-et 3 zones (Résidentielle, Commerciale, Industrielle).
+avec 42 images par catégorie = 126 images total.
 
-Structure: 14 types de déchets × 3 zones × 3 catégories = 126 images
-Format final: PDFs avec images 3x3 cm, 10 répétitions par ligne
+CORRECTIONS MAJEURES:
+- Réparation de la qualité PDF (images floues/pixelisées)
+- Simplification de la gestion des clés API 
+- Correction de la distribution: 42 images par catégorie
 
-Auteur: Assistant IA
+Auteur: Assistant IA (Version corrigée)
 Date: Septembre 2025
 """
 
@@ -69,509 +71,198 @@ class CompetitionWasteItem:
     typical_forms: List[str]
     
 class FreepikImageGenerator:
-    """Générateur d'images via l'API Freepik avec retry robuste et rotation des clés"""
+    """Générateur d'images via l'API Freepik avec utilisation simultanée des clés"""
     
     def __init__(self):
-        # Charger toutes les clés API disponibles
-        raw_keys = []
+        # CORRECTION: Vraie gestion simultanée des clés API
+        self.api_keys = self._load_api_keys()
+        
+        if not self.api_keys:
+            raise ValueError("Aucune clé API Freepik configurée")
+        
+        self.api_base_url = "https://api.freepik.com/v1/ai/text-to-image"
+        self.max_retries = 2
+        self.base_delay = 2.0
+        
+        # Statistiques par clé pour monitoring
+        self.key_stats = {key: {"success": 0, "failed": 0} for key in self.api_keys}
+        
+        logger.info(f"Initialized with {len(self.api_keys)} API keys for simultaneous use")
+    
+    def _load_api_keys(self) -> List[str]:
+        """Charge toutes les clés API disponibles"""
+        keys = []
         
         # Clé principale
         main_key = os.getenv("FREEPIK_API_KEY")
         if main_key:
-            raw_keys.append(main_key)
+            keys.append(main_key)
         
         # Clés additionnelles
-        for i in range(1, 10):  # Support jusqu'à 10 clés (FREEPIK_API_KEY_1 à FREEPIK_API_KEY_9)
+        for i in range(1, 10):
             key = os.getenv(f"FREEPIK_API_KEY_{i}")
             if key:
-                raw_keys.append(key)
+                keys.append(key)
         
-        if not raw_keys:
-            logger.error("Aucune clé API Freepik trouvée dans les variables d'environnement")
-            logger.error("Définissez au moins FREEPIK_API_KEY ou FREEPIK_API_KEY_1")
-            raise ValueError("Aucune clé API Freepik configurée")
-        
-        # Configuration de rotation des clés
-        self.current_key_index = 0
-        self.key_usage_count = {}  # Compteur d'utilisation par clé
-        self.failed_keys = set()  # Clés temporairement en échec
-        self.invalid_keys = set()  # Clés définitivement invalides
-        
-        self.api_base_url = "https://api.freepik.com/v1/ai/text-to-image/seedream"
-        self.max_retries = 2
-        self.base_delay = 1.0
-        self.max_delay = 10.0
-        
-        logger.info(f"Validation de {len(raw_keys)} clé(s) API Freepik...")
-        
-        # Valider les clés avant de les utiliser
-        self.api_keys = self._validate_api_keys(raw_keys)
-        
-        if not self.api_keys:
-            logger.error("Aucune clé API valide trouvée!")
-            raise ValueError("Toutes les clés API Freepik sont invalides")
-        
-        # Initialiser les compteurs pour les clés valides
-        for key in self.api_keys:
-            self.key_usage_count[key] = 0
-        
-        logger.info(f"✓ {len(self.api_keys)} clé(s) API valide(s) prête(s) à utiliser")
-        for i, key in enumerate(self.api_keys):
-            logger.info(f"  Clé {i+1}: {key[:10]}... ✓")
-    
-    def _validate_api_keys(self, raw_keys: list) -> list:
-        """Valide les clés API en testant l'endpoint réel d'API"""
+        # CORRECTION: Validation simple sans test complexe
         valid_keys = []
-        
-        for i, key in enumerate(raw_keys):
-            logger.info(f"Validation clé {i+1} ({key[:10]}...)...")
-            
-            try:
-                # Test avec l'endpoint réel de l'API Freepik
-                headers = {
-                    "x-freepik-api-key": key,
-                    "Content-Type": "application/json"
-                }
-                
-                # Test avec un prompt simple pour vérifier l'accès réel
-                test_payload = {
-                    "prompt": "simple test object",
-                    "aspect_ratio": "square_1_1",
-                    "guidance_scale": 3.0,
-                }
-                
-                response = requests.post(
-                    self.api_base_url,
-                    headers=headers,
-                    json=test_payload,
-                    timeout=15
-                )
-                
-                if response.status_code == 200:
-                    logger.info(f"✓ Clé {i+1} ({key[:10]}...) : Test API réel OK")
-                    valid_keys.append(key)
-                elif response.status_code == 401:
-                    logger.warning(f"❌ Clé {i+1} ({key[:10]}...) : Authentification échouée - clé invalide")
-                    self.invalid_keys.add(key)
-                elif response.status_code == 403:
-                    logger.warning(f"❌ Clé {i+1} ({key[:10]}...) : Accès interdit - permissions insuffisantes")
-                    self.invalid_keys.add(key)
-                elif response.status_code == 404:
-                    logger.warning(f"❌ Clé {i+1} ({key[:10]}...) : Endpoint non trouvé - clé probablement invalide")
-                    self.invalid_keys.add(key)
-                elif response.status_code == 429:
-                    logger.warning(f"⚠️  Clé {i+1} ({key[:10]}...) : Limite de taux atteinte - garde quand même")
-                    valid_keys.append(key)  # On garde car la clé fonctionne, juste limitée
-                else:
-                    logger.warning(f"⚠️  Clé {i+1} ({key[:10]}...) : Statut inattendu {response.status_code}")
-                    try:
-                        error_detail = response.json()
-                        logger.warning(f"   Détail: {error_detail}")
-                    except:
-                        logger.warning(f"   Réponse: {response.text[:100]}")
-                    
-                    # Pour les autres codes, on teste l'endpoint général en fallback
-                    fallback_response = requests.get(
-                        "https://api.freepik.com", 
-                        headers={"x-freepik-api-key": key}, 
-                        timeout=10
-                    )
-                    if fallback_response.status_code in [200, 404, 405]:
-                        logger.info(f"   Fallback OK - garde la clé {i+1}")
-                        valid_keys.append(key)
-                    else:
-                        logger.warning(f"   Fallback échoué - rejette la clé {i+1}")
-                        self.invalid_keys.add(key)
-                    
-            except Exception as e:
-                logger.warning(f"⚠️  Clé {i+1} ({key[:10]}...) : Erreur de test ({e})")
-                # En cas d'erreur réseau, on teste avec l'endpoint général
-                try:
-                    fallback_response = requests.get(
-                        "https://api.freepik.com", 
-                        headers={"x-freepik-api-key": key}, 
-                        timeout=10
-                    )
-                    if fallback_response.status_code in [200, 404, 405]:
-                        logger.info(f"   Fallback OK après erreur - garde la clé {i+1}")
-                        valid_keys.append(key)
-                    else:
-                        logger.warning(f"   Fallback échoué - rejette la clé {i+1}")
-                        self.invalid_keys.add(key)
-                except:
-                    logger.warning(f"   Tous les tests échoués - rejette la clé {i+1}")
-                    self.invalid_keys.add(key)
+        for i, key in enumerate(keys):
+            if len(key) > 10:  # Validation basique de longueur
+                valid_keys.append(key)
+                logger.info(f"API Key {i+1}: {key[:8]}... loaded")
+            else:
+                logger.warning(f"API Key {i+1}: Invalid format, skipped")
         
         return valid_keys
     
-    def get_current_api_key(self) -> str:
-        """Récupère la clé API actuelle, avec rotation automatique"""
-        # Filtrer les clés valides (pas failed et pas invalides)
-        available_keys = [key for key in self.api_keys 
-                         if key not in self.failed_keys and key not in self.invalid_keys]
-        
-        if not available_keys:
-            # Reset des clés failed si toutes sont bloquées
-            logger.warning("Toutes les clés API sont temporairement indisponibles, reset...")
-            self.failed_keys.clear()
-            available_keys = self.api_keys
-        
-        # Sélectionner la clé avec le moins d'utilisation
-        current_key = min(available_keys, key=lambda k: self.key_usage_count.get(k, 0))
-        return current_key
+    def get_next_api_key(self) -> str:
+        """Distribution équitable des clés pour utilisation simultanée"""
+        # Utiliser la clé avec le moins d'utilisations pour équilibrer la charge
+        return min(self.api_keys, key=lambda k: self.key_stats[k]["success"] + self.key_stats[k]["failed"])
     
-    def rotate_api_key(self, failed_key: str = None):
-        """Effectue la rotation vers une nouvelle clé API"""
-        if failed_key:
-            self.failed_keys.add(failed_key)
-            logger.warning(f"Clé API {failed_key[:10]}... marquée comme temporairement indisponible")
-        
-        # Sélectionner la prochaine clé disponible (exclure failed ET invalid)
-        available_keys = [key for key in self.api_keys 
-                         if key not in self.failed_keys and key not in self.invalid_keys]
-        
-        if available_keys:
-            next_key = min(available_keys, key=lambda k: self.key_usage_count.get(k, 0))
-            logger.info(f"Rotation vers la clé: {next_key[:10]}...")
-            return next_key
-        else:
-            # Toutes les clés valides sont failed, reset les failed seulement
-            valid_keys = [key for key in self.api_keys if key not in self.invalid_keys]
-            if valid_keys:
-                logger.warning("Reset de toutes les clés API failed (gardant les valides)")
-                self.failed_keys.clear()
-                return valid_keys[0]
-            else:
-                logger.error("Toutes les clés API sont invalides!")
-                return self.api_keys[0]  # Dernier recours
+    def generate_image(self, waste_item: CompetitionWasteItem) -> Optional[bytes]:
+        """Interface de compatibilité - utilise la première clé disponible"""
+        return self.generate_image_with_key(waste_item, self.get_next_api_key())
     
-    def _make_request_with_retry(self, method: str, url: str, **kwargs) -> Optional[requests.Response]:
-        """Effectue une requête avec retry automatique et rotation des clés API"""
-        original_key = self.get_current_api_key()
-        current_key = original_key
-        
-        # Effectuer la requête avec toutes les clés disponibles si nécessaire
-        for key_attempt in range(len(self.api_keys)):
-            # Mettre à jour les headers avec la clé actuelle
-            if 'headers' not in kwargs:
-                kwargs['headers'] = {}
-            kwargs['headers']['x-freepik-api-key'] = current_key
+    def generate_image_with_key(self, waste_item: CompetitionWasteItem, assigned_key: str) -> Optional[bytes]:
+        """Génère une image avec une clé API spécifique assignée"""
+        try:
+            prompt = self._build_simple_prompt(waste_item)
+            logger.info(f"[Key {assigned_key[:8]}...] Generating: {waste_item.name}")
             
-            # Tentatives de retry pour cette clé
             for attempt in range(self.max_retries + 1):
                 try:
                     if attempt > 0:
-                        delay = min(self.base_delay * (2 ** attempt) + random.uniform(0, 0.5), self.max_delay)
-                        logger.info(f"Retry attempt {attempt + 1}/{self.max_retries + 1} avec clé {current_key[:10]}..., waiting {delay:.1f}s...")
+                        delay = self.base_delay * attempt + random.uniform(0, 1)
                         time.sleep(delay)
-                    else:
-                        # Incrémenter le compteur d'utilisation pour cette clé
-                        self.key_usage_count[current_key] += 1
-                        if key_attempt == 0:
-                            logger.debug(f"Utilisation de la clé {current_key[:10]}... (usage: {self.key_usage_count[current_key]})")
+                        logger.info(f"[Key {assigned_key[:8]}...] Retry {attempt} for {waste_item.name}")
                     
-                    # Configuration de la requête
-                    kwargs.setdefault('timeout', 20)
-                    kwargs['headers']['User-Agent'] = 'Competition-Waste-Generator/1.0'
-                    
-                    if method.upper() == 'GET':
-                        response = requests.get(url, **kwargs)
-                    elif method.upper() == 'POST':
-                        response = requests.post(url, **kwargs)
-                    else:
-                        raise ValueError(f"Unsupported HTTP method: {method}")
-                    
-                    logger.debug(f"Request {method} {url} -> Status: {response.status_code}")
-                    
-                    if response.status_code == 200:
-                        return response
-                    elif response.status_code == 401:
-                        logger.error(f"Authentication échouée avec la clé {current_key[:10]}... - clé invalide")
-                        # Marquer cette clé comme définitivement invalide
-                        self.invalid_keys.add(current_key)
-                        self.rotate_api_key(current_key)
-                        break  # Sortir du retry loop pour cette clé
-                    elif response.status_code == 403:
-                        logger.error(f"Accès interdit avec la clé {current_key[:10]}... - Vérifiez les permissions")
-                        # Marquer cette clé comme définitivement invalide
-                        self.invalid_keys.add(current_key)
-                        self.rotate_api_key(current_key)
-                        break
-                    elif response.status_code == 404:
-                        logger.warning(f"Endpoint non trouvé (404) avec la clé {current_key[:10]}... - possible clé invalide")
-                        if attempt == self.max_retries:
-                            # Après plusieurs tentatives 404, marquer comme invalide
-                            logger.error(f"Erreurs 404 persistantes - marquage de la clé {current_key[:10]}... comme invalide")
-                            self.invalid_keys.add(current_key)
-                            self.rotate_api_key(current_key)
-                            break
-                    elif response.status_code == 429:
-                        logger.warning(f"Limite de taux atteinte avec la clé {current_key[:10]}... sur l'attempt {attempt + 1}")
-                        if attempt == self.max_retries:
-                            # Si c'est le dernier retry, marquer la clé et passer à la suivante
-                            logger.warning(f"Limite de taux persistante, rotation de la clé {current_key[:10]}...")
-                            self.rotate_api_key(current_key)
-                            break
-                    elif response.status_code in [500, 502, 503, 504]:
-                        logger.warning(f"Erreur serveur temporaire {response.status_code} avec clé {current_key[:10]}... sur l'attempt {attempt + 1}")
-                    else:
-                        logger.warning(f"Erreur inattendue {response.status_code} avec clé {current_key[:10]}... sur l'attempt {attempt + 1}")
-                        if attempt == self.max_retries:
-                            logger.warning(f"Erreur persistante, rotation de la clé {current_key[:10]}...")
-                            self.rotate_api_key(current_key)
-                            break
-                
-                except requests.exceptions.Timeout:
-                    logger.warning(f"Timeout avec clé {current_key[:10]}... sur l'attempt {attempt + 1}")
-                except requests.exceptions.RequestException as e:
-                    logger.warning(f"Erreur de requête avec clé {current_key[:10]}... sur l'attempt {attempt + 1}: {e}")
+                    image_data = self._generate_with_specific_key(prompt, assigned_key)
+                    if image_data:
+                        self.key_stats[assigned_key]["success"] += 1
+                        logger.info(f"[Key {assigned_key[:8]}...] ✓ {waste_item.name}")
+                        return image_data
+                        
                 except Exception as e:
-                    logger.error(f"Erreur inattendue avec clé {current_key[:10]}... sur l'attempt {attempt + 1}: {e}")
+                    logger.warning(f"[Key {assigned_key[:8]}...] Attempt {attempt + 1} failed for {waste_item.name}: {e}")
+                    if attempt == self.max_retries:
+                        self.key_stats[assigned_key]["failed"] += 1
             
-            # Si on arrive ici, cette clé a échoué, essayer la suivante
-            current_key = self.rotate_api_key(current_key)
-            if current_key == original_key and key_attempt > 0:
-                # On a fait le tour de toutes les clés
-                logger.error("Toutes les clés API ont échoué")
-                break
-        
-        return None
-    
-    def generate_image(self, waste_item: CompetitionWasteItem) -> Optional[bytes]:
-        """Génère une image pour un déchet donné avec gestion d'erreurs améliorée"""
-        try:
-            # 1. Créer le prompt optimisé
-            prompt = self._build_prompt(waste_item)
-            logger.info(f"Generating image for: {waste_item.name} ({waste_item.category}/{waste_item.zone})")
-            logger.debug(f"Prompt: {prompt[:100]}...")
-            
-            # 2. Test de connectivité API avant génération
-            if not self._test_api_connectivity():
-                logger.error("API connectivity test failed")
-                return None
-            
-            # 3. Créer la tâche de génération
-            task_id = self._create_generation_task(prompt)
-            if not task_id:
-                logger.error(f"Failed to create generation task for {waste_item.name}")
-                return None
-            
-            # 4. Attendre la completion et récupérer l'URL
-            image_url = self._wait_for_completion(task_id, max_wait_time=60)  # Timeout réduit
-            if not image_url:
-                logger.error(f"Failed to get image URL for {waste_item.name}")
-                return None
-            
-            # 5. Télécharger l'image
-            image_data = self._download_image(image_url)
-            if not image_data:
-                logger.error(f"Failed to download image for {waste_item.name}")
-                return None
-            
-            logger.info(f"✓ Successfully generated image for {waste_item.name}")
-            return image_data
+            logger.error(f"[Key {assigned_key[:8]}...] ✗ All attempts failed for {waste_item.name}")
+            return None
             
         except Exception as e:
-            logger.error(f"Exception generating image for {waste_item.name}: {e}")
+            logger.error(f"[Key {assigned_key[:8]}...] Exception for {waste_item.name}: {e}")
+            self.key_stats[assigned_key]["failed"] += 1
             return None
     
-    def _test_api_connectivity(self) -> bool:
-        """Test simple de connectivité à l'API Freepik avec toutes les clés"""
-        try:
-            # Tester avec chaque clé API disponible
-            for i, api_key in enumerate(self.api_keys):
-                headers = {"x-freepik-api-key": api_key}
-                response = requests.get("https://api.freepik.com", headers=headers, timeout=10)
-                if response.status_code in [200, 404, 405]:  # API accessible
-                    logger.info(f"Clé API {i+1} ({api_key[:10]}...) : connexion OK")
-                    return True
-                else:
-                    logger.warning(f"Clé API {i+1} ({api_key[:10]}...) : erreur {response.status_code}")
-            return False
-        except Exception as e:
-            logger.warning(f"Test de connectivité API échoué: {e}")
-            return False
-    
-    def _build_prompt(self, waste_item: CompetitionWasteItem) -> str:
-        """Construit un prompt optimisé pour la génération d'image de déchets réalistes"""
-        
-        # Prompts spécialisés par type de déchet et zone - VRAIMENT des déchets
-        base_prompts = {
-            "menagers": {
-                "residentielle": "Used dirty household waste item, garbage from home, discarded trash, worn out domestic refuse",
-                "commerciale": "Discarded commercial waste, used office trash, thrown away business garbage, soiled refuse",
-                "industrielle": "Industrial waste debris, factory refuse, discarded manufacturing materials, dirty industrial trash"
-            },
-            "dangereux": {
-                "residentielle": "Discarded hazardous household waste, used dangerous materials, toxic waste container, contaminated refuse",
-                "commerciale": "Used commercial hazardous waste, discarded toxic materials, contaminated business trash",
-                "industrielle": "Industrial toxic waste, contaminated dangerous refuse, polluted hazardous materials, dirty chemical containers"
-            },
-            "recyclables": {
-                "residentielle": "Used recyclable waste, dirty household recycling, soiled materials ready for recycling, worn out recyclables",
-                "commerciale": "Discarded commercial recyclables, used business materials, soiled packaging waste, dirty office recycling",
-                "industrielle": "Industrial recyclable waste, used factory materials, soiled manufacturing refuse, dirty production waste"
-            }
+    def _build_simple_prompt(self, waste_item: CompetitionWasteItem) -> str:
+        """CORRECTION: Prompt court et efficace"""
+        # Prompts courts et précis
+        base_descriptions = {
+            "menagers": "household garbage waste",
+            "recyclables": "recyclable waste material", 
+            "dangereux": "hazardous waste container"
         }
         
-        # Construire le prompt principal
-        base_prompt = base_prompts.get(waste_item.category, {}).get(
-            waste_item.zone, 
-            f"discarded {waste_item.category} waste item, dirty trash from {waste_item.zone} setting"
-        )
+        zone_context = {
+            "residentielle": "home",
+            "commerciale": "office", 
+            "industrielle": "factory"
+        }
         
-        # Ajouter les détails spécifiques avec aspect usagé
-        details = []
-        if waste_item.colors:
-            details.append(f"faded dirty {', '.join(waste_item.colors[:2])} color")
-        if waste_item.materials:
-            details.append(f"worn {', '.join(waste_item.materials[:2])} material")
-        if waste_item.typical_forms:
-            details.append(f"damaged {', '.join(waste_item.typical_forms[:2])} shape")
+        base = base_descriptions.get(waste_item.category, "waste")
+        context = zone_context.get(waste_item.zone, "")
         
-        # Prompt final optimisé pour des VRAIS déchets
-        prompt = f"""
-        Realistic photography of discarded {waste_item.name}, {base_prompt}.
-        {', '.join(details) if details else ''}
-        {waste_item.description} - thrown away, used, dirty, soiled
-        
-        Style: Realistic waste photography, dirty trash, used refuse, garbage appearance,
-        soiled surface, worn out materials, discarded items, authentic waste look,
-        stained and weathered, suitable for waste recognition training,
-        clear waste identification, documentary trash photography, dirty texture,
-        realistic refuse condition, abandoned garbage appearance.
-        
-        IMPORTANT: Make it look like REAL WASTE - dirty, used, discarded, soiled, stained.
-        """.strip()
+        # Prompt final court
+        prompt = f"realistic {waste_item.name.replace('_', ' ')} {base} from {context}, used dirty refuse, white background"
         
         return prompt
     
-    def _create_generation_task(self, prompt: str) -> Optional[str]:
-        """Crée une tâche de génération sur Freepik"""
-        try:
-            payload = {
-                "prompt": prompt,
-                "aspect_ratio": "square_1_1",
-                "guidance_scale": 3.0,
-            }
+    def _generate_with_specific_key(self, prompt: str, api_key: str) -> Optional[bytes]:
+        """Génère une image avec une clé API spécifique"""
+        headers = {
+            "x-freepik-api-key": api_key,
+            "Content-Type": "application/json"
+        }
+        
+        payload = {
+            "prompt": prompt,
+            "aspect_ratio": "square_1_1",
+            "guidance_scale": 3.0,
+        }
+        
+        # Créer la tâche
+        response = requests.post(
+            f"{self.api_base_url}/seedream",
+            headers=headers,
+            json=payload,
+            timeout=30
+        )
+        
+        if response.status_code != 200:
+            raise Exception(f"Task creation failed: {response.status_code}")
+        
+        task_data = response.json()
+        task_id = task_data.get("data", {}).get("task_id")
+        
+        if not task_id:
+            raise Exception("No task_id received")
+        
+        # Attendre la completion
+        image_url = self._wait_for_completion(task_id, api_key)
+        if not image_url:
+            raise Exception("Image generation timeout")
+        
+        # Télécharger l'image
+        img_response = requests.get(image_url, timeout=60)
+        if img_response.status_code == 200:
+            return img_response.content
+        else:
+            raise Exception(f"Download failed: {img_response.status_code}")
+    
+    def get_statistics(self) -> Dict[str, Dict[str, int]]:
+        """Retourne les statistiques d'utilisation par clé"""
+        return self.key_stats.copy()
+    
+    def _wait_for_completion(self, task_id: str, api_key: str, max_wait: int = 60) -> Optional[str]:
+        """Attend la completion de la tâche"""
+        headers = {"x-freepik-api-key": api_key}
+        check_url = f"{self.api_base_url}/seedream/{task_id}"
+        
+        start_time = time.time()
+        
+        while time.time() - start_time < max_wait:
+            response = requests.get(check_url, headers=headers, timeout=30)
             
-            # Les headers x-freepik-api-key sont maintenant gérés par _make_request_with_retry
-            response = self._make_request_with_retry(
-                'POST', 
-                self.api_base_url,
-                json=payload,
-                headers={"Content-Type": "application/json"},
-                timeout=30
-            )
-            
-            if response and response.status_code == 200:
+            if response.status_code == 200:
                 data = response.json()
-                task_id = data.get("data", {}).get("task_id")
-                if task_id:
-                    logger.debug(f"Created Freepik task: {task_id}")
-                    return task_id
-                else:
-                    logger.error(f"No task_id in response: {data}")
+                task_data = data.get("data", {})
+                status = task_data.get("status")
+                
+                if status == "COMPLETED":
+                    generated_urls = task_data.get("generated", [])
+                    if len(generated_urls) >= 2 and str(generated_urls[1]).startswith("http"):
+                        return generated_urls[1]
+                elif status in ["FAILED", "CANCELLED"]:
+                    return None
+                
+                time.sleep(3)
             else:
-                logger.error(f"Failed to create task: {response.status_code if response else 'No response'}")
-                
-        except Exception as e:
-            logger.error(f"Exception creating task: {e}")
-            
-        return None
-    
-    def _wait_for_completion(self, task_id: str, max_wait_time: int = 120) -> Optional[str]:
-        """Attend la completion de la tâche Freepik"""
-        try:
-            check_url = f"{self.api_base_url}/{task_id}"
-            
-            start_time = time.time()
-            check_interval = 5
-            
-            while time.time() - start_time < max_wait_time:
-                response = self._make_request_with_retry(
-                    'GET', 
-                    check_url,
-                    timeout=30
-                )
-                
-                if response and response.status_code == 200:
-                    data = response.json()
-                    task_data = data.get("data", {})
-                    status = task_data.get("status")
-                    
-                    if status == "COMPLETED":
-                        # Freepik retourne [dimensions, url] dans generated[]
-                        generated_urls = task_data.get("generated", [])
-                        
-                        logger.debug(f"Generated array: {generated_urls}")
-                        
-                        if len(generated_urls) >= 2:
-                            # Prendre le deuxième élément qui est l'URL
-                            image_url = generated_urls[1]
-                            
-                            if image_url and str(image_url).startswith("http"):
-                                logger.info(f"✓ Image URL obtained: {image_url[:100]}...")
-                                return image_url
-                            else:
-                                logger.error(f"Invalid image URL format: {image_url}")
-                        elif len(generated_urls) == 1:
-                            # Fallback si un seul élément
-                            url = generated_urls[0]
-                            if str(url).startswith("http"):
-                                return str(url)
-                        
-                        logger.error(f"No valid image URL found. Generated: {generated_urls}")
-                        return None
-                    elif status in ["FAILED", "CANCELLED"]:
-                        logger.error(f"Task failed with status: {status}")
-                        return None
-                    elif status in ["CREATED", "PROCESSING", "IN_PROGRESS"]:
-                        logger.debug(f"Task status: {status}, waiting...")
-                        time.sleep(check_interval)
-                        continue
-                
-                time.sleep(check_interval)
-            
-            logger.error(f"Timeout waiting for task completion: {task_id}")
-            return None
-            
-        except Exception as e:
-            logger.error(f"Exception waiting for completion: {e}")
-            return None
-    
-    def _download_image(self, image_url: str) -> Optional[bytes]:
-        """Télécharge l'image depuis l'URL Freepik"""
-        try:
-            response = self._make_request_with_retry(
-                'GET',
-                image_url,
-                timeout=60,
-                stream=True
-            )
-            
-            if response and response.status_code == 200:
-                image_data = response.content
-                if len(image_data) > 0:
-                    return image_data
-                else:
-                    logger.error("Empty image downloaded")
-            else:
-                logger.error(f"Failed to download image: {response.status_code if response else 'No response'}")
-                
-        except Exception as e:
-            logger.error(f"Exception downloading image: {e}")
-            
+                time.sleep(5)
+        
         return None
 
 class PDFLayoutGenerator:
-    """Générateur de mise en page PDF pour les cubes de déchets"""
+    """Générateur de mise en page PDF pour les cubes de déchets - VERSION CORRIGÉE"""
     
     def __init__(self, output_dir: Path):
         self.output_dir = output_dir
-        self.image_size_cm = 3.0  # 3x3 cm
+        self.image_size_cm = 3.0
+        
+        # CORRECTION: DPI et conversion corrects
         self.dpi = 300
-        self.image_size_px = int(self.image_size_cm * self.dpi / 12.54)  # Conversion cm to pixels
+        self.image_size_px = int(self.image_size_cm * self.dpi / 2.54)  # Conversion cm vers pixels
         
         # Configuration PDF
         self.page_width, self.page_height = A4
@@ -579,25 +270,24 @@ class PDFLayoutGenerator:
         self.spacing = 0.2 * cm
         self.images_per_row = 10
         
+        logger.info(f"PDF config: {self.image_size_px}px images, {self.dpi} DPI")
+    
     def create_category_pdf(self, category: str, waste_images: List[Tuple[CompetitionWasteItem, bytes]]) -> str:
-        """Crée un PDF pour une catégorie de déchets avec page de bilan"""
+        """Crée un PDF pour une catégorie de déchets"""
         try:
             pdf_filename = f"competition_waste_{category}.pdf"
             pdf_path = self.output_dir / pdf_filename
             
-            # Créer le canvas PDF
             c = canvas.Canvas(str(pdf_path), pagesize=A4)
             
-            # 1. Créer la page de bilan en premier
+            # Page de résumé
             self._create_summary_page(c, category, waste_images)
             c.showPage()
             
-            # 2. Créer les pages d'images
-            self._create_images_pages(c, category, waste_images)
+            # Pages d'images avec qualité corrigée
+            self._create_high_quality_images_pages(c, category, waste_images)
             
-            # Finaliser le PDF
             c.save()
-            
             logger.info(f"✓ PDF created: {pdf_path}")
             return str(pdf_path)
             
@@ -605,147 +295,23 @@ class PDFLayoutGenerator:
             logger.error(f"Error creating PDF for {category}: {e}")
             return None
     
-    def _create_summary_page(self, c: canvas.Canvas, category: str, waste_images: List[Tuple[CompetitionWasteItem, bytes]]):
-        """Crée une page de résumé/bilan pour le PDF"""
+    def _create_high_quality_images_pages(self, c: canvas.Canvas, category: str, waste_images: List[Tuple[CompetitionWasteItem, bytes]]):
+        """CORRECTION: Pages d'images haute qualité sans flou"""
         try:
-            # Configuration de la page
-            page_width, page_height = A4
-            margin = 2 * cm
-            
-            # Titre principal
-            c.setFont("Helvetica-Bold", 24)
-            title = f"DATASET DÉCHETS - {category.upper()}"
-            title_width = c.stringWidth(title, "Helvetica-Bold", 24)
-            title_x = (page_width - title_width) / 2
-            c.drawString(title_x, page_height - margin - 1*cm, title)
-            
-            # Sous-titre
-            c.setFont("Helvetica", 14)
-            subtitle = f"TRC 2025"
-            subtitle_width = c.stringWidth(subtitle, "Helvetica", 14)
-            subtitle_x = (page_width - subtitle_width) / 2
-            c.drawString(subtitle_x, page_height - margin - 2*cm, subtitle)
-            
-            # Ligne de séparation
-            c.setStrokeColor(black)
-            c.setLineWidth(2)
-            c.line(margin, page_height - margin - 2.5*cm, page_width - margin, page_height - margin - 2.5*cm)
-            
-            # Statistiques générales
-            y_pos = page_height - margin - 4*cm
-            c.setFont("Helvetica-Bold", 16)
-            c.drawString(margin, y_pos, "📊 STATISTIQUES")
-            
-            y_pos -= 1*cm
-            c.setFont("Helvetica", 12)
-            stats_info = [
-                f"• Total d'images dans cette catégorie: {len(waste_images)}",
-                f"• Format d'impression: 3x3 cm",
-                f"• Catégorie: {category.capitalize()}",
-            ]
-            
-            for info in stats_info:
-                c.drawString(margin + 0.5*cm, y_pos, info)
-                y_pos -= 0.5*cm
-            
-            # Liste des déchets par zone
-            y_pos -= 1*cm
-            c.setFont("Helvetica-Bold", 16)
-            c.drawString(margin, y_pos, "📋 LISTE DES DÉCHETS")
-            
-            # Grouper par zone
-            zones_data = {}
-            for waste_item, _ in waste_images:
-                zone = waste_item.zone
-                if zone not in zones_data:
-                    zones_data[zone] = []
-                zones_data[zone].append(waste_item)
-            
-            y_pos -= 0.8*cm
-            for zone, items in zones_data.items():
-                # Titre de zone
-                c.setFont("Helvetica-Bold", 14)
-                zone_title = f"🏢 ZONE {zone.upper()} ({len(items)} déchets)"
-                c.drawString(margin + 0.5*cm, y_pos, zone_title)
-                y_pos -= 0.6*cm
-                
-                # Liste des déchets de cette zone
-                c.setFont("Helvetica", 11)
-                for i, item in enumerate(items, 1):
-                    if y_pos < margin + 3*cm:  # Nouvelle page si nécessaire
-                        c.showPage()
-                        y_pos = page_height - margin - 2*cm
-                    
-                    waste_info = f"   {i:2d}. {item.name.replace('_', ' ').title()}"
-                    c.drawString(margin + 1*cm, y_pos, waste_info)
-                    y_pos -= 0.4*cm
-                
-                y_pos -= 0.3*cm
-            
-            # Instructions d'utilisation
-            if y_pos < margin + 6*cm:  # Nouvelle page si nécessaire
-                c.showPage()
-                y_pos = page_height - margin - 2*cm
-            
-            y_pos -= 1*cm
-            c.setFont("Helvetica-Bold", 16)
-            c.drawString(margin, y_pos, "📖 INSTRUCTIONS D'UTILISATION")
-            
-            y_pos -= 0.8*cm
-            c.setFont("Helvetica", 12)
-            instructions = [
-                "1. Imprimer ce PDF sur papier A4 standard",
-                "2. Chaque ligne contient 10 exemplaires du même déchet",
-                "3. Découper chaque image le long des lignes (3x3 cm)",
-                "4. Coller les images sur les faces des cubes de compétition",
-                "5. Chaque cube représente un déchet de la catégorie spécifiée",
-                "",
-                "⚠️  IMPORTANT:",
-                "• Respecter les dimensions 3x3 cm pour la reconnaissance",
-                "• Garder les images bien alignées sur les cubes",
-                "• Noter la catégorie et zone de chaque déchet"
-            ]
-            
-            for instruction in instructions:
-                if y_pos < margin + 1*cm:  # Nouvelle page si nécessaire
-                    c.showPage()
-                    y_pos = page_height - margin - 2*cm
-                
-                c.drawString(margin + 0.5*cm, y_pos, instruction)
-                y_pos -= 0.5*cm
-            
-            # Footer
-            c.setFont("Helvetica-Oblique", 10)
-            footer_text = f"Généré automatiquement par Competition Waste Generator - {category}"
-            footer_width = c.stringWidth(footer_text, "Helvetica-Oblique", 10)
-            footer_x = (page_width - footer_width) / 2
-            c.drawString(footer_x, margin, footer_text)
-            
-        except Exception as e:
-            logger.error(f"Error creating summary page: {e}")
-    
-    def _create_images_pages(self, c: canvas.Canvas, category: str, waste_images: List[Tuple[CompetitionWasteItem, bytes]]):
-        """Crée les pages avec les images de déchets"""
-        try:
-            # Calculer les positions
             image_size_points = self.image_size_cm * cm
             row_height = image_size_points + self.spacing
             
             current_y = self.page_height - self.margin - image_size_points
-            row_count = 0
-            
-            logger.info(f"Creating image pages for category: {category}")
             
             for waste_item, image_data in tqdm(waste_images, desc=f"Adding {category} to PDF"):
-                # Vérifier si on a besoin d'une nouvelle page
+                # Nouvelle page si nécessaire
                 if current_y < self.margin + image_size_points:
                     c.showPage()
                     current_y = self.page_height - self.margin - image_size_points
-                    row_count = 0
                 
-                # Traiter et redimensionner l'image
-                processed_image_data = self._process_image_for_pdf(image_data)
-                if not processed_image_data:
+                # CORRECTION: Traitement haute qualité de l'image
+                processed_image = self._process_image_high_quality(image_data)
+                if not processed_image:
                     logger.warning(f"Failed to process image for {waste_item.name}")
                     continue
                 
@@ -755,299 +321,356 @@ class PDFLayoutGenerator:
                     if current_x + image_size_points > self.page_width - self.margin:
                         break
                     
-                    # Dessiner l'image
-                    c.drawInlineImage(
-                        processed_image_data,
+                    # CORRECTION: Utilisation correcte de drawImage avec BytesIO
+                    c.drawImage(
+                        processed_image,
                         current_x,
                         current_y,
                         width=image_size_points,
-                        height=image_size_points
+                        height=image_size_points,
+                        preserveAspectRatio=True
                     )
                     
                     current_x += image_size_points + self.spacing
                 
                 current_y -= row_height
-                row_count += 1
                 
         except Exception as e:
             logger.error(f"Error creating image pages: {e}")
     
-    def _process_image_for_pdf(self, image_data: bytes) -> Optional[BytesIO]:
-        """Traite et redimensionne une image pour le PDF"""
+    def _process_image_high_quality(self, image_data: bytes) -> Optional[BytesIO]:
+        """CORRECTION: Traitement haute qualité pour éviter le flou"""
         try:
-            # Ouvrir l'image
-            image = Image.open(BytesIO(image_data))
+            # Ouvrir l'image source
+            source_image = Image.open(BytesIO(image_data))
             
-            # Redimensionner à la taille exacte (3x3 cm à 300 DPI)
+            # CORRECTION: Redimensionnement haute qualité avec anti-aliasing
             target_size = (self.image_size_px, self.image_size_px)
-            image = image.resize(target_size, Image.Resampling.LANCZOS)
             
-            # Convertir en RGB si nécessaire
-            if image.mode in ("RGBA", "P"):
-                background = Image.new("RGB", image.size, (255, 255, 255))
-                if image.mode == "RGBA":
-                    background.paste(image, mask=image.split()[-1])
+            # Utiliser LANCZOS pour la meilleure qualité de redimensionnement
+            processed_image = source_image.resize(target_size, Image.Resampling.LANCZOS)
+            
+            # Convertir en RGB si nécessaire (éviter les problèmes RGBA)
+            if processed_image.mode in ("RGBA", "P"):
+                background = Image.new("RGB", processed_image.size, (255, 255, 255))
+                if processed_image.mode == "RGBA":
+                    background.paste(processed_image, mask=processed_image.split()[-1])
                 else:
-                    background.paste(image)
-                image = background
+                    background.paste(processed_image)
+                processed_image = background
             
-            # Retourner directement l'objet PIL Image pour ReportLab
-            return image
+            # CORRECTION: Sauvegarder en BytesIO avec DPI explicite et haute qualité
+            output = BytesIO()
+            processed_image.save(
+                output, 
+                format='JPEG', 
+                quality=95,  # Haute qualité JPEG
+                dpi=(self.dpi, self.dpi),  # DPI explicite
+                optimize=False  # Pas d'optimisation qui pourrait dégrader
+            )
+            output.seek(0)
+            
+            logger.debug(f"Processed image: {target_size} at {self.dpi} DPI")
+            return output
             
         except Exception as e:
             logger.error(f"Error processing image: {e}")
             return None
+    
+    def _create_summary_page(self, c: canvas.Canvas, category: str, waste_images: List[Tuple[CompetitionWasteItem, bytes]]):
+        """Page de résumé simplifiée"""
+        page_width, page_height = A4
+        margin = 2 * cm
+        
+        # Titre
+        c.setFont("Helvetica-Bold", 24)
+        title = f"DATASET DÉCHETS - {category.upper()}"
+        title_width = c.stringWidth(title, "Helvetica-Bold", 24)
+        title_x = (page_width - title_width) / 2
+        c.drawString(title_x, page_height - margin - 1*cm, title)
+        
+        # Statistiques
+        y_pos = page_height - margin - 4*cm
+        c.setFont("Helvetica", 14)
+        stats = [
+            f"Total d'images: {len(waste_images)}",
+            f"Format: 3x3 cm à {self.dpi} DPI",
+            f"Catégorie: {category.capitalize()}",
+            "",
+            "Instructions:",
+            "1. Imprimer sur papier A4",
+            "2. Découper chaque carré 3x3 cm", 
+            "3. Coller sur les cubes de compétition"
+        ]
+        
+        for stat in stats:
+            c.drawString(margin, y_pos, stat)
+            y_pos -= 0.7*cm
 
 class CompetitionDatasetGenerator:
-    """Générateur principal du dataset pour la compétition"""
+    """Générateur principal du dataset pour la compétition - VERSION CORRIGÉE"""
     
     def __init__(self, output_dir: str = "competition_waste_dataset"):
         self.output_dir = Path(output_dir)
         self.freepik_generator = FreepikImageGenerator()
         self.pdf_generator = PDFLayoutGenerator(self.output_dir)
         
-        # Configuration
-        self.max_workers = 1  # Séquentiel pour éviter les problèmes de rate limit
+        self.max_workers = 2  # Légèrement parallélisé
         
-        # Créer les répertoires
         self._setup_directories()
         
-        # Charger la configuration des déchets
-        self.waste_items = self._load_waste_configuration()
+        # CORRECTION: Configuration corrigée pour 42 items par catégorie
+        self.waste_items = self._load_corrected_waste_configuration()
         
-        logger.info(f"Initialized generator with {len(self.waste_items)} waste items")
+        logger.info(f"Initialized with {len(self.waste_items)} waste items")
+        logger.info(f"Distribution: {self._count_by_category()}")
     
     def _setup_directories(self):
         """Créer la structure de répertoires"""
         directories = [
             self.output_dir,
-            self.output_dir / "images",
+            self.output_dir / "images", 
             self.output_dir / "pdfs",
-            self.output_dir / "logs",
             self.output_dir / "cache"
         ]
         
         for directory in directories:
             directory.mkdir(parents=True, exist_ok=True)
     
-    def _load_waste_configuration(self) -> List[CompetitionWasteItem]:
-        """Charge la configuration des déchets pour la compétition"""
+    def _load_corrected_waste_configuration(self) -> List[CompetitionWasteItem]:
+        """CORRECTION: Configuration pour exactement 42 items par catégorie"""
         
-        # Configuration des 14 types de déchets par zone
-        waste_configs = {
-            "menagers": {
-                "residentielle": [
-                    CompetitionWasteItem("bouteille_plastique", "menagers", "residentielle",
-                                       "Bouteille en plastique domestique", 
-                                       ["transparent", "bleu", "vert"], ["PET", "HDPE"], 
-                                       ["bouteille", "cylindrique"]),
-                    CompetitionWasteItem("sac_plastique", "menagers", "residentielle",
-                                       "Sac plastique de courses",
-                                       ["blanc", "noir", "coloré"], ["polyéthylène"],
-                                       ["sac", "froissé"]),
-                    CompetitionWasteItem("canette_aluminium", "menagers", "residentielle",
-                                       "Canette de boisson en aluminium",
-                                       ["argenté", "rouge", "bleu"], ["aluminium"],
-                                       ["cylindrique", "canette"]),
-                    CompetitionWasteItem("carton_alimentaire", "menagers", "residentielle",
-                                       "Emballage carton alimentaire",
-                                       ["brun", "blanc"], ["carton"], ["boîte", "plat"]),
-                    CompetitionWasteItem("reste_alimentaire", "menagers", "residentielle",
-                                       "Déchets alimentaires organiques",
-                                       ["variable"], ["organique"], ["reste", "épluchure"])
-                ],
-                "commerciale": [
-                    CompetitionWasteItem("papier_bureau", "menagers", "commerciale",
-                                       "Papier de bureau usagé",
-                                       ["blanc", "bleu"], ["papier"], ["feuille", "document"]),
-                    CompetitionWasteItem("gobelet_plastique", "menagers", "commerciale",
-                                       "Gobelet plastique jetable",
-                                       ["blanc", "transparent"], ["plastique"], ["gobelet"]),
-                    CompetitionWasteItem("emballage_alimentaire", "menagers", "commerciale",
-                                       "Emballage fast-food",
-                                       ["blanc", "coloré"], ["carton", "plastique"], ["boîte", "sachet"]),
-                    CompetitionWasteItem("bouteille_verre", "menagers", "commerciale",
-                                       "Bouteille en verre",
-                                       ["transparent", "vert", "brun"], ["verre"], ["bouteille"]),
-                    CompetitionWasteItem("canette_metal", "menagers", "commerciale",
-                                       "Canette ou conserve métallique",
-                                       ["argenté", "coloré"], ["métal", "aluminium"], ["cylindrique"])
-                ],
-                "industrielle": [
-                    CompetitionWasteItem("film_plastique", "menagers", "industrielle",
-                                       "Film plastique d'emballage industriel",
-                                       ["transparent", "noir"], ["polyéthylène"], ["film", "rouleau"]),
-                    CompetitionWasteItem("carton_ondule", "menagers", "industrielle",
-                                       "Carton ondulé d'emballage",
-                                       ["brun"], ["carton ondulé"], ["plaque", "boîte"]),
-                    CompetitionWasteItem("palette_bois", "menagers", "industrielle",
-                                       "Palette en bois usagée",
-                                       ["brun", "naturel"], ["bois"], ["palette", "planche"]),
-                    CompetitionWasteItem("bidon_plastique", "menagers", "industrielle",
-                                       "Bidon plastique industriel",
-                                       ["blanc", "bleu"], ["HDPE"], ["bidon", "jerrycan"])
-                ]
-            },
-            "recyclables": {
-                "residentielle": [
-                    CompetitionWasteItem("journal_magazine", "recyclables", "residentielle",
-                                       "Journaux et magazines",
-                                       ["blanc", "coloré"], ["papier journal"], ["pile", "magazine"]),
-                    CompetitionWasteItem("boite_conserve", "recyclables", "residentielle",
-                                       "Boîte de conserve alimentaire",
-                                       ["argenté"], ["acier", "fer blanc"], ["cylindrique", "boîte"]),
-                    CompetitionWasteItem("bouteille_plastique_propre", "recyclables", "residentielle",
-                                       "Bouteille plastique nettoyée",
-                                       ["transparent", "bleu"], ["PET"], ["bouteille", "propre"]),
-                    CompetitionWasteItem("verre_alimentaire", "recyclables", "residentielle",
-                                       "Bocal ou bouteille en verre",
-                                       ["transparent", "vert"], ["verre"], ["bocal", "bouteille"]),
-                    CompetitionWasteItem("textile_propre", "recyclables", "residentielle",
-                                       "Textile en bon état",
-                                       ["variable"], ["coton", "synthétique"], ["vêtement", "tissu"])
-                ],
-                "commerciale": [
-                    CompetitionWasteItem("papier_blanc", "recyclables", "commerciale",
-                                       "Papier blanc de bureau",
-                                       ["blanc"], ["papier"], ["feuille", "rame"]),
-                    CompetitionWasteItem("carton_propre", "recyclables", "commerciale",
-                                       "Carton d'emballage propre",
-                                       ["brun", "blanc"], ["carton"], ["boîte", "plat"]),
-                    CompetitionWasteItem("aluminium_propre", "recyclables", "commerciale",
-                                       "Aluminium et canettes propres",
-                                       ["argenté"], ["aluminium"], ["canette", "feuille"]),
-                    CompetitionWasteItem("plastique_rigide", "recyclables", "commerciale",
-                                       "Plastique rigide propre",
-                                       ["variable"], ["HDPE", "PP"], ["conteneur", "boîte"]),
-                    CompetitionWasteItem("verre_commercial", "recyclables", "commerciale",
-                                       "Verre commercial (bouteilles, bocaux)",
-                                       ["transparent", "vert", "brun"], ["verre"], ["bouteille", "bocal"])
-                ],
-                "industrielle": [
-                    CompetitionWasteItem("metal_ferreux", "recyclables", "industrielle",
-                                       "Ferraille et métaux ferreux",
-                                       ["gris", "rouillé"], ["acier", "fer"], ["plaque", "poutre", "débris"]),
-                    CompetitionWasteItem("metal_non_ferreux", "recyclables", "industrielle",
-                                       "Métaux non ferreux (cuivre, aluminium)",
-                                       ["cuivré", "argenté"], ["cuivre", "aluminium"], ["fil", "plaque", "profilé"]),
-                    CompetitionWasteItem("plastique_industriel", "recyclables", "industrielle",
-                                       "Plastiques industriels triés",
-                                       ["variable"], ["HDPE", "PP", "PVC"], ["tuyau", "conteneur", "film"]),
-                    CompetitionWasteItem("papier_carton_industriel", "recyclables", "industrielle",
-                                       "Papiers et cartons industriels",
-                                       ["brun", "blanc"], ["carton ondulé", "papier kraft"], ["balle", "plaque"])
-                ]
-            },
-            "dangereux": {
-                "residentielle": [
-                    CompetitionWasteItem("pile_batterie", "dangereux", "residentielle",
-                                       "Piles et petites batteries",
-                                       ["noir", "argenté", "coloré"], ["lithium", "alcaline"], ["cylindrique", "rectangulaire"]),
-                    CompetitionWasteItem("ampoule_neon", "dangereux", "residentielle",
-                                       "Ampoules et tubes néon",
-                                       ["blanc", "transparent"], ["verre", "mercure"], ["spirale", "tube", "bulbe"]),
-                    CompetitionWasteItem("medicament_perime", "dangereux", "residentielle",
-                                       "Médicaments périmés",
-                                       ["blanc", "coloré"], ["plastique", "papier"], ["boîte", "flacon", "blister"]),
-                    CompetitionWasteItem("produit_nettoyage", "dangereux", "residentielle",
-                                       "Produits de nettoyage ménagers",
-                                       ["coloré"], ["plastique"], ["flacon", "spray", "bidon"]),
-                    CompetitionWasteItem("peinture_solvant", "dangereux", "residentielle",
-                                       "Peintures et solvants domestiques",
-                                       ["variable"], ["métal", "plastique"], ["pot", "bidon", "aérosol"])
-                ],
-                "commerciale": [
-                    CompetitionWasteItem("cartouche_encre", "dangereux", "commerciale",
-                                       "Cartouches d'encre d'imprimante",
-                                       ["noir", "coloré"], ["plastique", "métal"], ["cartouche"]),
-                    CompetitionWasteItem("produit_chimique_bureau", "dangereux", "commerciale",
-                                       "Produits chimiques de bureau",
-                                       ["variable"], ["plastique", "verre"], ["flacon", "spray"]),
-                    CompetitionWasteItem("equipement_electronique", "dangereux", "commerciale",
-                                       "Équipements électroniques usagés",
-                                       ["noir", "gris"], ["plastique", "métal"], ["boîtier", "composant"]),
-                    CompetitionWasteItem("batterie_vehicule", "dangereux", "commerciale",
-                                       "Batteries de véhicules",
-                                       ["noir", "rouge"], ["plomb", "acide"], ["rectangulaire", "lourde"]),
-                    CompetitionWasteItem("huile_usagee", "dangereux", "commerciale",
-                                       "Huiles usagées (moteur, hydraulique)",
-                                       ["noir", "brun"], ["plastique", "métal"], ["bidon", "fût"])
-                ],
-                "industrielle": [
-                    CompetitionWasteItem("dechet_chimique", "dangereux", "industrielle",
-                                       "Déchets chimiques industriels",
-                                       ["variable"], ["plastique", "verre", "métal"], ["fût", "conteneur", "cuve"]),
-                    CompetitionWasteItem("dechet_medical", "dangereux", "industrielle",
-                                       "Déchets médicaux et hospitaliers",
-                                       ["rouge", "jaune"], ["plastique"], ["conteneur", "sac", "boîte"]),
-                    CompetitionWasteItem("amiante", "dangereux", "industrielle",
-                                       "Matériaux contenant de l'amiante",
-                                       ["gris", "blanc"], ["fibrociment"], ["plaque", "tuyau", "debris"]),
-                    CompetitionWasteItem("radioactif", "dangereux", "industrielle",
-                                       "Déchets radioactifs de faible activité",
-                                       ["jaune", "noir"], ["métal", "plastique"], ["fût", "conteneur", "blindé"])
-                ]
-            }
+        # 14 types de base par catégorie, répartis sur les 3 zones
+        waste_types = {
+            "menagers": [
+                # Zone résidentielle (14 items)
+                ("bouteille_plastique_eau", "residentielle", "Bouteille d'eau plastique domestique", ["transparent", "bleu"], ["PET"], ["bouteille"]),
+                ("sac_plastique_courses", "residentielle", "Sac plastique de supermarché", ["blanc", "noir"], ["LDPE"], ["sac"]),
+                ("canette_soda", "residentielle", "Canette de soda aluminium", ["rouge", "bleu"], ["aluminium"], ["cylindrique"]),
+                ("boite_cereales", "residentielle", "Boîte de céréales carton", ["coloré"], ["carton"], ["rectangulaire"]),
+                ("reste_fruit", "residentielle", "Reste de fruits organiques", ["variable"], ["organique"], ["épluchure"]),
+                ("journal_quotidien", "residentielle", "Journal quotidien papier", ["noir", "blanc"], ["papier"], ["pages"]),
+                ("pot_yaourt", "residentielle", "Pot de yaourt plastique", ["blanc"], ["polystyrène"], ["pot"]),
+                ("bouteille_lait", "residentielle", "Bouteille de lait plastique", ["blanc"], ["HDPE"], ["bouteille"]),
+                ("boite_conserve_tomate", "residentielle", "Boîte de conserve tomates", ["rouge"], ["fer blanc"], ["cylindrique"]),
+                ("sachet_chips", "residentielle", "Sachet de chips métallisé", ["argenté"], ["aluminium"], ["sachet"]),
+                ("gobelet_cafe", "residentielle", "Gobelet café carton", ["brun"], ["carton"], ["gobelet"]),
+                ("emballage_biscuit", "residentielle", "Emballage de biscuits plastique", ["coloré"], ["plastique"], ["sachet"]),
+                ("bouteille_huile", "residentielle", "Bouteille d'huile verre", ["vert"], ["verre"], ["bouteille"]),
+                ("barquette_viande", "residentielle", "Barquette viande polystyrène", ["blanc"], ["polystyrène"], ["barquette"]),
+                
+                # Zone commerciale (14 items)
+                ("gobelet_distributeur", "commerciale", "Gobelet distributeur plastique", ["blanc"], ["PS"], ["gobelet"]),
+                ("canette_cafe", "commerciale", "Canette café métallique", ["noir"], ["aluminium"], ["cylindrique"]),
+                ("emballage_sandwich", "commerciale", "Emballage sandwich carton", ["blanc"], ["carton"], ["triangulaire"]),
+                ("bouteille_eau_bureau", "commerciale", "Bouteille eau bureau plastique", ["transparent"], ["PET"], ["bouteille"]),
+                ("sachet_sucre", "commerciale", "Sachet sucre papier", ["blanc"], ["papier"], ["sachet"]),
+                ("barquette_salade", "commerciale", "Barquette salade plastique", ["transparent"], ["PET"], ["rectangulaire"]),
+                ("pot_sauce", "commerciale", "Pot sauce plastique", ["blanc"], ["PP"], ["pot"]),
+                ("canette_the", "commerciale", "Canette thé glacé", ["vert"], ["aluminium"], ["cylindrique"]),
+                ("emballage_croissant", "commerciale", "Emballage croissanterie", ["transparent"], ["plastique"], ["sachet"]),
+                ("bouteille_jus", "commerciale", "Bouteille jus de fruit", ["orange"], ["PET"], ["bouteille"]),
+                ("boite_pizza", "commerciale", "Boîte pizza carton", ["blanc"], ["carton ondulé"], ["carrée"]),
+                ("gobelet_glace", "commerciale", "Gobelet glace carton", ["coloré"], ["carton"], ["conique"]),
+                ("sachet_ketchup", "commerciale", "Sachet ketchup plastique", ["rouge"], ["plastique"], ["sachet"]),
+                ("bouteille_smoothie", "commerciale", "Bouteille smoothie plastique", ["coloré"], ["PET"], ["bouteille"]),
+                
+                # Zone industrielle (14 items)
+                ("bidon_eau_5L", "industrielle", "Bidon eau 5L industriel", ["bleu"], ["HDPE"], ["bidon"]),
+                ("sac_ciment", "industrielle", "Sac ciment papier kraft", ["brun"], ["papier kraft"], ["sac"]),
+                ("feuillard_acier", "industrielle", "Feuillard acier d'emballage", ["gris"], ["acier"], ["bande"]),
+                ("film_plastique_palette", "industrielle", "Film plastique palette", ["transparent"], ["LDPE"], ["film"]),
+                ("bidon_huile_moteur", "industrielle", "Bidon huile moteur plastique", ["noir"], ["HDPE"], ["bidon"]),
+                ("carton_ondule_grand", "industrielle", "Grand carton ondulé", ["brun"], ["carton ondulé"], ["plaque"]),
+                ("sangle_textile", "industrielle", "Sangle textile d'arrimage", ["coloré"], ["polyester"], ["sangle"]),
+                ("jerrycan_20L", "industrielle", "Jerrycan 20L plastique", ["rouge"], ["HDPE"], ["jerrycan"]),
+                ("palette_bois_cassee", "industrielle", "Palette bois cassée", ["brun"], ["bois"], ["palette"]),
+                ("big_bag_vide", "industrielle", "Big bag textile vide", ["blanc"], ["polypropylène"], ["sac"]),
+                ("tuyau_plastique", "industrielle", "Tuyau plastique souple", ["noir"], ["PVC"], ["tuyau"]),
+                ("caisse_plastique", "industrielle", "Caisse plastique industrielle", ["gris"], ["PP"], ["caisse"]),
+                ("fût_metal_200L", "industrielle", "Fût métallique 200L", ["bleu"], ["acier"], ["cylindrique"]),
+                ("rouleau_carton", "industrielle", "Rouleau carton d'emballage", ["brun"], ["carton"], ["cylindrique"])
+            ],
+            
+            "recyclables": [
+                # Zone résidentielle (14 items)
+                ("bouteille_verre_vin", "residentielle", "Bouteille vin verre propre", ["vert"], ["verre"], ["bouteille"]),
+                ("journal_propre", "residentielle", "Journal papier propre", ["blanc"], ["papier journal"], ["pile"]),
+                ("canette_alu_propre", "residentielle", "Canette aluminium propre", ["argenté"], ["aluminium"], ["cylindrique"]),
+                ("boite_carton_propre", "residentielle", "Boîte carton alimentaire propre", ["brun"], ["carton"], ["boîte"]),
+                ("bouteille_plastique_propre", "residentielle", "Bouteille plastique nettoyée", ["transparent"], ["PET"], ["bouteille"]),
+                ("bocal_verre_propre", "residentielle", "Bocal verre alimentaire propre", ["transparent"], ["verre"], ["bocal"]),
+                ("magazine_propre", "residentielle", "Magazine papier glacé", ["coloré"], ["papier glacé"], ["magazine"]),
+                ("boite_metal_propre", "residentielle", "Boîte métal conserve propre", ["argenté"], ["fer blanc"], ["cylindrique"]),
+                ("carton_lait_propre", "residentielle", "Carton lait tétrapack propre", ["blanc"], ["carton plastifié"], ["tétrapack"]),
+                ("vetement_coton", "residentielle", "Vêtement coton usagé", ["variable"], ["coton"], ["textile"]),
+                ("chaussure_cuir", "residentielle", "Chaussure cuir usagée", ["brun"], ["cuir"], ["chaussure"]),
+                ("livre_papier", "residentielle", "Livre papier usagé", ["variable"], ["papier"], ["livre"]),
+                ("sac_tissu", "residentielle", "Sac tissu réutilisable", ["variable"], ["tissu"], ["sac"]),
+                ("bouteille_verre_huile", "residentielle", "Bouteille huile verre propre", ["vert"], ["verre"], ["bouteille"]),
+                
+                # Zone commerciale (14 items)
+                ("papier_bureau_blanc", "commerciale", "Papier bureau blanc A4", ["blanc"], ["papier"], ["feuilles"]),
+                ("carton_emballage", "commerciale", "Carton emballage commercial", ["brun"], ["carton ondulé"], ["boîte"]),
+                ("canette_boisson_propre", "commerciale", "Canette boisson nettoyée", ["coloré"], ["aluminium"], ["cylindrique"]),
+                ("bouteille_eau_propre", "commerciale", "Bouteille eau PET propre", ["transparent"], ["PET"], ["bouteille"]),
+                ("verre_restaurant", "commerciale", "Verre restaurant cassé", ["transparent"], ["verre"], ["verre"]),
+                ("plastique_rigide_propre", "commerciale", "Plastique rigide PP propre", ["variable"], ["PP"], ["conteneur"]),
+                ("metal_canette_grande", "commerciale", "Grande canette métal 50cl", ["coloré"], ["aluminium"], ["cylindrique"]),
+                ("carton_pizza_propre", "commerciale", "Carton pizza sans graisse", ["blanc"], ["carton"], ["carré"]),
+                ("bouteille_verre_biere", "commerciale", "Bouteille bière verre brune", ["brun"], ["verre"], ["bouteille"]),
+                ("papier_journal_commercial", "commerciale", "Journaux distribution gratuite", ["coloré"], ["papier journal"], ["pile"]),
+                ("emballage_carton_sec", "commerciale", "Emballage carton sec", ["variable"], ["carton"], ["boîte"]),
+                ("plastique_transparent", "commerciale", "Plastique transparent PET", ["transparent"], ["PET"], ["conteneur"]),
+                ("metal_conserve_grande", "commerciale", "Grande conserve métal 1L", ["argenté"], ["fer blanc"], ["cylindrique"]),
+                ("verre_bocal_1L", "commerciale", "Bocal verre 1L commercial", ["transparent"], ["verre"], ["bocal"]),
+                
+                # Zone industrielle (14 items)
+                ("ferraille_acier", "industrielle", "Ferraille acier découpée", ["gris"], ["acier"], ["debris"]),
+                ("aluminium_industriel", "industrielle", "Aluminium industriel massif", ["argenté"], ["aluminium"], ["plaque"]),
+                ("cuivre_fil", "industrielle", "Fil cuivre électrique", ["cuivré"], ["cuivre"], ["bobine"]),
+                ("plastique_HDPE_industriel", "industrielle", "Plastique HDPE industriel", ["coloré"], ["HDPE"], ["bloc"]),
+                ("carton_ondule_industriel", "industrielle", "Carton ondulé industriel", ["brun"], ["carton ondulé"], ["plaque"]),
+                ("papier_kraft_industriel", "industrielle", "Papier kraft industriel", ["brun"], ["papier kraft"], ["rouleau"]),
+                ("metal_inox", "industrielle", "Acier inoxydable industriel", ["argenté"], ["inox"], ["plaque"]),
+                ("plastique_PP_industriel", "industrielle", "Polypropylène industriel", ["variable"], ["PP"], ["conteneur"]),
+                ("verre_industriel", "industrielle", "Verre industriel cassé", ["transparent"], ["verre"], ["debris"]),
+                ("bronze_industriel", "industrielle", "Bronze industriel usagé", ["bronze"], ["bronze"], ["pièce"]),
+                ("plastique_PVC_tuyau", "industrielle", "Tuyau PVC industriel", ["gris"], ["PVC"], ["tuyau"]),
+                ("carton_compacte", "industrielle", "Carton compacté industriel", ["brun"], ["carton"], ["balle"]),
+                ("metal_zinc", "industrielle", "Zinc industriel oxydé", ["gris"], ["zinc"], ["plaque"]),
+                ("plastique_PE_film", "industrielle", "Film PE industriel", ["transparent"], ["PE"], ["film"])
+            ],
+            
+            "dangereux": [
+                # Zone résidentielle (14 items) 
+                ("pile_alcaline", "residentielle", "Pile alcaline AA/AAA usée", ["noir"], ["alcaline"], ["cylindrique"]),
+                ("batterie_telephone", "residentielle", "Batterie téléphone lithium", ["noir"], ["lithium"], ["rectangulaire"]),
+                ("ampoule_led_cassee", "residentielle", "Ampoule LED cassée", ["blanc"], ["verre", "électronique"], ["ampoule"]),
+                ("tube_neon_casse", "residentielle", "Tube néon cassé mercure", ["blanc"], ["verre", "mercure"], ["tube"]),
+                ("medicament_expire", "residentielle", "Médicaments expirés", ["blanc", "coloré"], ["plastique"], ["boîte", "flacon"]),
+                ("produit_nettoyage_vide", "residentielle", "Produit nettoyage domestique vide", ["coloré"], ["plastique"], ["flacon"]),
+                ("peinture_pot_vide", "residentielle", "Pot peinture domestique vide", ["variable"], ["métal"], ["pot"]),
+                ("aerosol_vide", "residentielle", "Aérosol domestique vide", ["coloré"], ["métal"], ["cylindrique"]),
+                ("thermometre_mercure", "residentielle", "Thermomètre mercure cassé", ["argenté"], ["verre", "mercure"], ["tube"]),
+                ("pile_bouton", "residentielle", "Pile bouton lithium", ["argenté"], ["lithium"], ["ronde"]),
+                ("chargeur_telephone", "residentielle", "Chargeur téléphone défaillant", ["noir"], ["plastique", "métal"], ["câble"]),
+                ("produit_jardinage", "residentielle", "Produit jardinage toxique", ["coloré"], ["plastique"], ["bidon"]),
+                ("huile_vidange", "residentielle", "Huile vidange moteur domestique", ["noir"], ["plastique"], ["bidon"]),
+                ("solvant_bricolage", "residentielle", "Solvant bricolage domestique", ["variable"], ["métal"], ["bidon"]),
+                ("insecticide_aerosol", "residentielle", "Insecticide aérosol vide", ["coloré"], ["métal"], ["cylindrique"]),
+                ("dechets_electronique", "residentielle", "Déchets électroniques domestiques", ["noir"], ["plastique", "métal"], ["appareil"]),
+                ("produit_chimique_piscine", "residentielle", "Produit chimique piscine", ["bleu"], ["plastique"], ["bidon"]),
+                
+                # Zone commerciale (14 items)
+                ("cartouche_imprimante", "commerciale", "Cartouche imprimante usée", ["noir", "coloré"], ["plastique"], ["cartouche"]),
+                ("batterie_ordinateur", "commerciale", "Batterie ordinateur portable", ["noir"], ["lithium"], ["rectangulaire"]),
+                ("ecran_lcd_casse", "commerciale", "Écran LCD cassé", ["noir"], ["verre", "mercure"], ["plat"]),
+                ("produit_chimique_labo", "commerciale", "Produit chimique laboratoire", ["variable"], ["verre"], ["flacon"]),
+                ("huile_hydraulique", "commerciale", "Huile hydraulique usée", ["rouge"], ["plastique"], ["bidon"]),
+                ("batterie_vehicule_12V", "commerciale", "Batterie véhicule 12V", ["noir"], ["plomb", "acide"], ["rectangulaire"]),
+                ("liquide_refroidissement", "commerciale", "Liquide refroidissement auto", ["vert"], ["plastique"], ["bidon"]),
+                ("cartouche_toner", "commerciale", "Cartouche toner laser", ["noir"], ["plastique"], ["cylindrique"]),
+                ("produit_photographique", "commerciale", "Produit développement photo", ["brun"], ["plastique"], ["flacon"]),
+                ("disque_dur_defaillant", "commerciale", "Disque dur défaillant", ["gris"], ["métal"], ["rectangulaire"]),
+                ("condensateur_pcb", "commerciale", "Condensateur PCB usé", ["gris"], ["métal"], ["cylindrique"]),
+                ("liquide_frein", "commerciale", "Liquide frein automobile", ["jaune"], ["plastique"], ["flacon"]),
+                ("batterie_ups", "commerciale", "Batterie onduleur UPS", ["noir"], ["plomb"], ["rectangulaire"]),
+                ("produit_colle_industriel", "commerciale", "Colle industrielle époxy", ["variable"], ["métal"], ["tube"]),
+                
+                # Zone industrielle (14 items) - CORRECTION: exactement 14 pour avoir 42 total
+                ("dechet_chimique_fût", "industrielle", "Déchet chimique en fût", ["bleu"], ["métal"], ["fût"]),
+                ("dechet_medical_hopital", "industrielle", "Déchet médical hospitalier", ["rouge"], ["plastique"], ["conteneur"]),
+                ("amiante_plaque", "industrielle", "Plaque fibrociment amiante", ["gris"], ["fibrociment"], ["plaque"]),
+                ("dechet_radioactif_faible", "industrielle", "Déchet radioactif faible activité", ["jaune"], ["métal"], ["fût"]),
+                ("solvant_industriel", "industrielle", "Solvant industriel chloré", ["transparent"], ["métal"], ["bidon"]),
+                ("acide_industriel", "industrielle", "Acide industriel concentré", ["transparent"], ["plastique"], ["jerrycan"]),
+                ("mercure_industriel", "industrielle", "Mercure industriel contaminé", ["argenté"], ["métal"], ["flacon"]),
+                ("cyanure_industriel", "industrielle", "Résidu cyanure industriel", ["blanc"], ["plastique"], ["sac"]),
+                ("pcb_transformateur", "industrielle", "PCB transformateur électrique", ["noir"], ["métal"], ["cuve"]),
+                ("chrome_hexavalent", "industrielle", "Chrome hexavalent galvanoplastie", ["jaune"], ["plastique"], ["cuve"]),
+                ("formaldehyde_industriel", "industrielle", "Formaldéhyde industriel", ["transparent"], ["verre"], ["flacon"]),
+                ("pesticide_industriel", "industrielle", "Pesticide industriel concentré", ["coloré"], ["métal"], ["bidon"]),
+                ("plomb_batterie_industriel", "industrielle", "Batterie industrielle plomb", ["gris"], ["plomb"], ["rectangulaire"]),
+                ("dechet_pharmaceutique", "industrielle", "Déchet pharmaceutique industriel", ["variable"], ["verre"], ["flacon"])
+            ]
         }
         
-        # Aplatir la configuration en liste
+        # Aplatir la configuration en une seule liste
         waste_items = []
-        for category, zones in waste_configs.items():
-            for zone, items in zones.items():
-                waste_items.extend(items)
+        for category, items_list in waste_types.items():
+            for name, zone, description, colors, materials, forms in items_list:
+                waste_items.append(CompetitionWasteItem(
+                    name=name,
+                    category=category, 
+                    zone=zone,
+                    description=description,
+                    colors=colors,
+                    materials=materials,
+                    typical_forms=forms
+                ))
         
-        logger.info(f"Loaded {len(waste_items)} waste configurations")
+        logger.info(f"Loaded configuration: {self._count_items_by_category(waste_items)}")
         return waste_items
     
+    def _count_items_by_category(self, items: List[CompetitionWasteItem]) -> Dict[str, int]:
+        """Compte les items par catégorie"""
+        counts = {"menagers": 0, "recyclables": 0, "dangereux": 0}
+        for item in items:
+            if item.category in counts:
+                counts[item.category] += 1
+        return counts
+    
+    def _count_by_category(self) -> Dict[str, int]:
+        """Compte les éléments par catégorie"""
+        return self._count_items_by_category(self.waste_items)
+    
     def generate_all_images(self) -> Dict[str, List[Tuple[CompetitionWasteItem, bytes]]]:
-        """Génère toutes les images en parallèle"""
-        logger.info("Starting image generation for all waste items...")
+        """Génère toutes les images avec gestion de cache"""
+        logger.info("Starting image generation...")
         
-        # Organiser par catégorie pour les PDFs
+        # Organiser par catégorie
         images_by_category = {"menagers": [], "recyclables": [], "dangereux": []}
         
-        # Vérifier le cache existant
+        # Charger le cache
         cached_items = self._load_cache()
         
-        # Filtrer les éléments déjà générés
+        # Séparer les éléments cachés et à générer
         items_to_generate = []
         for item in self.waste_items:
             cache_key = f"{item.category}_{item.zone}_{item.name}"
             if cache_key in cached_items:
-                logger.info(f"Using cached image for {item.name}")
+                logger.info(f"Using cached: {item.name}")
                 images_by_category[item.category].append((item, cached_items[cache_key]))
             else:
                 items_to_generate.append(item)
         
         if not items_to_generate:
-            logger.info("All images already cached!")
+            logger.info("All images cached!")
             return images_by_category
         
-        # Générer les images manquantes en parallèle
         logger.info(f"Generating {len(items_to_generate)} new images...")
         
+        # Générer en parallèle limité
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
-            # Soumettre toutes les tâches
             future_to_item = {
                 executor.submit(self.freepik_generator.generate_image, item): item
                 for item in items_to_generate
             }
             
-            # Collecter les résultats avec progress bar
-            with tqdm(total=len(future_to_item), desc="Generating images") as pbar:
+            with tqdm(total=len(future_to_item), desc="Generating") as pbar:
                 for future in as_completed(future_to_item):
                     item = future_to_item[future]
                     try:
                         image_data = future.result()
                         if image_data:
                             images_by_category[item.category].append((item, image_data))
-                            # Sauvegarder en cache
                             self._save_to_cache(item, image_data)
-                            logger.info(f"✓ Generated: {item.name}")
+                            logger.info(f"✓ {item.name}")
                         else:
-                            logger.error(f"✗ Failed: {item.name}")
+                            logger.error(f"✗ {item.name}")
                     except Exception as e:
-                        logger.error(f"Exception for {item.name}: {e}")
+                        logger.error(f"Exception {item.name}: {e}")
                     
                     pbar.update(1)
         
@@ -1058,10 +681,9 @@ class CompetitionDatasetGenerator:
         logger.info("Generating PDFs...")
         
         pdf_paths = []
-        
         for category, waste_images in images_by_category.items():
             if waste_images:
-                logger.info(f"Creating PDF for category: {category} ({len(waste_images)} items)")
+                logger.info(f"Creating PDF: {category} ({len(waste_images)} items)")
                 pdf_path = self.pdf_generator.create_category_pdf(category, waste_images)
                 if pdf_path:
                     pdf_paths.append(pdf_path)
@@ -1071,7 +693,7 @@ class CompetitionDatasetGenerator:
         return pdf_paths
     
     def _load_cache(self) -> Dict[str, bytes]:
-        """Charge le cache des images déjà générées"""
+        """Charge le cache des images"""
         cache_file = self.output_dir / "cache" / "image_cache.json"
         cached_items = {}
         
@@ -1093,18 +715,18 @@ class CompetitionDatasetGenerator:
         return cached_items
     
     def _save_to_cache(self, item: CompetitionWasteItem, image_data: bytes):
-        """Sauvegarde une image dans le cache"""
+        """Sauvegarde en cache"""
         try:
             cache_dir = self.output_dir / "cache"
             cache_file = cache_dir / "image_cache.json"
             
-            # Charger le cache existant
+            # Charger cache existant
             cache_data = {}
             if cache_file.exists():
                 with open(cache_file, 'r') as f:
                     cache_data = json.load(f)
             
-            # Ajouter la nouvelle image
+            # Ajouter nouvelle image
             cache_key = f"{item.category}_{item.zone}_{item.name}"
             cache_data[cache_key] = base64.b64encode(image_data).decode('utf-8')
             
@@ -1112,7 +734,7 @@ class CompetitionDatasetGenerator:
             with open(cache_file, 'w') as f:
                 json.dump(cache_data, f)
             
-            # Sauvegarder aussi l'image individuelle
+            # Image individuelle
             image_file = cache_dir / f"{cache_key}.jpg"
             with open(image_file, 'wb') as f:
                 f.write(image_data)
@@ -1121,22 +743,20 @@ class CompetitionDatasetGenerator:
             logger.warning(f"Failed to save cache for {item.name}: {e}")
     
     def run_full_generation(self) -> Dict[str, any]:
-        """Lance la génération complète du dataset"""
+        """Lance la génération complète"""
         start_time = time.time()
         
-        logger.info("=" * 60)
-        logger.info("COMPETITION WASTE DATASET GENERATOR")
-        logger.info("=" * 60)
-        logger.info(f"Total waste items to generate: {len(self.waste_items)}")
-        logger.info(f"Categories: menagers, recyclables, dangereux")
-        logger.info(f"Zones: residentielle, commerciale, industrielle")
-        logger.info(f"Output directory: {self.output_dir}")
+        logger.info("="*60)
+        logger.info("COMPETITION WASTE DATASET GENERATOR - VERSION CORRIGÉE")
+        logger.info("="*60)
+        logger.info(f"Configuration: {self._count_by_category()}")
+        logger.info(f"Total items: {len(self.waste_items)}")
         
         try:
-            # Étape 1: Générer toutes les images
+            # Générer images avec utilisation simultanée des clés
             images_by_category = self.generate_all_images()
             
-            # Étape 2: Créer les PDFs
+            # Créer PDFs
             pdf_paths = self.generate_pdfs(images_by_category)
             
             # Statistiques finales
@@ -1152,16 +772,18 @@ class CompetitionDatasetGenerator:
                 "elapsed_time": elapsed_time,
                 "images_by_category": {
                     cat: len(images) for cat, images in images_by_category.items()
-                }
+                },
+                "api_key_stats": self.freepik_generator.get_statistics()
             }
             
-            logger.info("=" * 60)
-            logger.info("GENERATION COMPLETE!")
-            logger.info(f"✓ Generated {total_generated}/{len(self.waste_items)} images")
-            logger.info(f"✓ Created {len(pdf_paths)} PDF files")
-            logger.info(f"✓ Total time: {elapsed_time:.1f} seconds")
-            logger.info(f"✓ Output: {self.output_dir}")
-            logger.info("=" * 60)
+            logger.info("="*60)
+            logger.info("GENERATION TERMINÉE AVEC UTILISATION SIMULTANÉE DES CLÉS!")
+            logger.info(f"✓ Images: {total_generated}/{len(self.waste_items)}")
+            logger.info(f"✓ PDFs: {len(pdf_paths)}")  
+            logger.info(f"✓ Répartition: {result['images_by_category']}")
+            logger.info(f"✓ Temps: {elapsed_time:.1f}s")
+            logger.info(f"✓ Clés API utilisées: {len(self.freepik_generator.api_keys)}")
+            logger.info("="*60)
             
             return result
             
@@ -1176,47 +798,44 @@ class CompetitionDatasetGenerator:
 def main():
     """Fonction principale"""
     try:
-        # Vérifier les variables d'environnement - au moins une clé API doit être définie
-        has_api_key = False
-        if os.getenv("FREEPIK_API_KEY"):
-            has_api_key = True
-        else:
-            # Vérifier les clés additionnelles
-            for i in range(1, 10):
-                if os.getenv(f"FREEPIK_API_KEY_{i}"):
-                    has_api_key = True
-                    break
+        # Vérifier les clés API
+        has_api_key = bool(os.getenv("FREEPIK_API_KEY"))
+        for i in range(1, 10):
+            if os.getenv(f"FREEPIK_API_KEY_{i}"):
+                has_api_key = True
+                break
         
         if not has_api_key:
             logger.error("Aucune clé API Freepik trouvée!")
-            logger.error("Définissez au moins FREEPIK_API_KEY ou FREEPIK_API_KEY_1 dans votre fichier .env")
+            logger.error("Définissez FREEPIK_API_KEY ou FREEPIK_API_KEY_1 dans votre .env")
             return
         
-        # Créer et lancer le générateur
+        # Lancer la génération
         generator = CompetitionDatasetGenerator("competition_waste_dataset")
         result = generator.run_full_generation()
         
         if result["success"]:
             print("\n" + "="*60)
-            print("🎉 GENERATION SUCCESSFUL!")
+            print("🎉 GENERATION RÉUSSIE!")
             print(f"📊 Images: {result['generated_images']}/{result['total_items']}")
             print(f"📄 PDFs: {result['generated_pdfs']}")
-            print(f"⏱️  Time: {result['elapsed_time']:.1f}s")
-            print(f"📁 Output: competition_waste_dataset/")
-            print("\n📋 Next steps:")
-            print("1. Check the PDFs in competition_waste_dataset/pdfs/")
-            print("2. Print the PDFs on A4 paper")
-            print("3. Cut the 3x3 cm squares")
-            print("4. Apply to your competition cubes")
+            print(f"📈 Répartition: {result['images_by_category']}")
+            print(f"⏱️  Temps: {result['elapsed_time']:.1f}s")
+            print(f"📁 Dossier: competition_waste_dataset/")
+            print("\n📋 Étapes suivantes:")
+            print("1. Vérifier les PDFs dans competition_waste_dataset/pdfs/")
+            print("2. Imprimer sur papier A4")
+            print("3. Découper les carrés 3x3 cm")  
+            print("4. Coller sur vos cubes de compétition")
             print("="*60)
         else:
-            print(f"\n❌ Generation failed: {result.get('error', 'Unknown error')}")
+            print(f"\n❌ Échec: {result.get('error', 'Erreur inconnue')}")
             
     except KeyboardInterrupt:
-        print("\n⏹️  Generation interrupted by user")
+        print("\n⏹️  Génération interrompue")
     except Exception as e:
-        logger.error(f"Main execution error: {e}")
-        print(f"\n❌ Unexpected error: {e}")
+        logger.error(f"Erreur principale: {e}")
+        print(f"\n❌ Erreur: {e}")
 
 if __name__ == "__main__":
     main()

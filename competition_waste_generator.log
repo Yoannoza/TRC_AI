@@ -1,735 +1,221 @@
-2025-09-18 05:14:16,117 - INFO - __main__ - Freepik API initialized with key: FPSX94e4a9...
-2025-09-18 05:14:16,118 - INFO - __main__ - Loaded 42 waste configurations
-2025-09-18 05:14:16,118 - INFO - __main__ - Initialized generator with 42 waste items
-2025-09-18 05:14:16,118 - INFO - __main__ - ============================================================
-2025-09-18 05:14:16,118 - INFO - __main__ - COMPETITION WASTE DATASET GENERATOR
-2025-09-18 05:14:16,118 - INFO - __main__ - ============================================================
-2025-09-18 05:14:16,118 - INFO - __main__ - Total waste items to generate: 42
-2025-09-18 05:14:16,119 - INFO - __main__ - Categories: menagers, recyclables, dangereux
-2025-09-18 05:14:16,119 - INFO - __main__ - Zones: residentielle, commerciale, industrielle
-2025-09-18 05:14:16,119 - INFO - __main__ - Output directory: competition_waste_dataset
-2025-09-18 05:14:16,119 - INFO - __main__ - Starting image generation for all waste items...
-2025-09-18 05:14:16,119 - INFO - __main__ - Generating 42 new images...
-2025-09-18 05:14:16,120 - INFO - __main__ - Generating image for: bouteille_plastique (menagers/residentielle)
-2025-09-18 05:14:25,839 - WARNING - __main__ - Request exception on attempt 1: Invalid URL '1224x1224': No scheme supplied. Perhaps you meant https://1224x1224?
-2025-09-18 05:14:25,840 - INFO - __main__ - Retry attempt 2/3, waiting 2.3s...
-2025-09-18 05:14:28,185 - WARNING - __main__ - Request exception on attempt 2: Invalid URL '1224x1224': No scheme supplied. Perhaps you meant https://1224x1224?
-2025-09-18 05:14:28,185 - INFO - __main__ - Retry attempt 3/3, waiting 4.2s...
-2025-09-18 05:14:32,390 - WARNING - __main__ - Request exception on attempt 3: Invalid URL '1224x1224': No scheme supplied. Perhaps you meant https://1224x1224?
-2025-09-18 05:14:32,390 - ERROR - __main__ - All retry attempts failed for GET 1224x1224
-2025-09-18 05:14:32,391 - ERROR - __main__ - Failed to download image: No response
-2025-09-18 05:14:32,391 - ERROR - __main__ - Failed to download image for bouteille_plastique
-2025-09-18 05:14:32,392 - INFO - __main__ - Generating image for: sac_plastique (menagers/residentielle)
-2025-09-18 05:14:32,392 - ERROR - __main__ - ✗ Failed: bouteille_plastique
-2025-09-18 05:14:41,492 - WARNING - __main__ - Request exception on attempt 1: Invalid URL '1224x1224': No scheme supplied. Perhaps you meant https://1224x1224?
-2025-09-18 05:14:41,492 - INFO - __main__ - Retry attempt 2/3, waiting 2.4s...
-2025-09-18 05:14:43,902 - WARNING - __main__ - Request exception on attempt 2: Invalid URL '1224x1224': No scheme supplied. Perhaps you meant https://1224x1224?
-2025-09-18 05:14:43,903 - INFO - __main__ - Retry attempt 3/3, waiting 4.3s...
-2025-09-18 05:32:24,778 - INFO - __main__ - Freepik API initialized with key: FPSX94e4a9...
-2025-09-18 05:32:24,779 - INFO - __main__ - Loaded 42 waste configurations
-2025-09-18 05:32:24,780 - INFO - __main__ - Initialized generator with 42 waste items
-2025-09-18 05:32:24,780 - INFO - __main__ - ============================================================
-2025-09-18 05:32:24,780 - INFO - __main__ - COMPETITION WASTE DATASET GENERATOR
-2025-09-18 05:32:24,780 - INFO - __main__ - ============================================================
-2025-09-18 05:32:24,780 - INFO - __main__ - Total waste items to generate: 42
-2025-09-18 05:32:24,781 - INFO - __main__ - Categories: menagers, recyclables, dangereux
-2025-09-18 05:32:24,781 - INFO - __main__ - Zones: residentielle, commerciale, industrielle
-2025-09-18 05:32:24,781 - INFO - __main__ - Output directory: competition_waste_dataset
-2025-09-18 05:32:24,781 - INFO - __main__ - Starting image generation for all waste items...
-2025-09-18 05:32:24,781 - INFO - __main__ - Generating 42 new images...
-2025-09-18 05:32:24,782 - INFO - __main__ - Generating image for: bouteille_plastique (menagers/residentielle)
-2025-09-18 05:32:34,767 - WARNING - __main__ - Request exception on attempt 1: Invalid URL '1224x1224': No scheme supplied. Perhaps you meant https://1224x1224?
-2025-09-18 05:32:34,767 - INFO - __main__ - Retry attempt 2/3, waiting 2.4s...
-2025-09-18 05:32:37,185 - WARNING - __main__ - Request exception on attempt 2: Invalid URL '1224x1224': No scheme supplied. Perhaps you meant https://1224x1224?
-2025-09-18 05:32:37,185 - INFO - __main__ - Retry attempt 3/3, waiting 4.0s...
-2025-09-18 05:32:41,200 - WARNING - __main__ - Request exception on attempt 3: Invalid URL '1224x1224': No scheme supplied. Perhaps you meant https://1224x1224?
-2025-09-18 05:32:41,200 - ERROR - __main__ - All retry attempts failed for GET 1224x1224
-2025-09-18 05:32:41,201 - ERROR - __main__ - Failed to download image: No response
-2025-09-18 05:32:41,201 - ERROR - __main__ - Failed to download image for bouteille_plastique
-2025-09-18 05:32:41,201 - INFO - __main__ - Generating image for: sac_plastique (menagers/residentielle)
-2025-09-18 05:32:41,203 - ERROR - __main__ - ✗ Failed: bouteille_plastique
-2025-09-18 05:32:50,925 - WARNING - __main__ - Request exception on attempt 1: Invalid URL '1224x1224': No scheme supplied. Perhaps you meant https://1224x1224?
-2025-09-18 05:32:50,925 - INFO - __main__ - Retry attempt 2/3, waiting 2.3s...
-2025-09-18 05:32:53,233 - WARNING - __main__ - Request exception on attempt 2: Invalid URL '1224x1224': No scheme supplied. Perhaps you meant https://1224x1224?
-2025-09-18 05:32:53,233 - INFO - __main__ - Retry attempt 3/3, waiting 4.3s...
-2025-09-18 05:32:57,502 - WARNING - __main__ - Request exception on attempt 3: Invalid URL '1224x1224': No scheme supplied. Perhaps you meant https://1224x1224?
-2025-09-18 05:32:57,503 - ERROR - __main__ - All retry attempts failed for GET 1224x1224
-2025-09-18 05:32:57,503 - ERROR - __main__ - Failed to download image: No response
-2025-09-18 05:32:57,504 - ERROR - __main__ - Failed to download image for sac_plastique
-2025-09-18 05:32:57,504 - INFO - __main__ - Generating image for: canette_aluminium (menagers/residentielle)
-2025-09-18 05:53:02,414 - INFO - competition_waste_generator - Freepik API initialized with key: FPSX94e4a9...
-2025-09-18 05:53:37,501 - INFO - competition_waste_generator - Freepik API initialized with key: FPSX94e4a9...
-2025-09-18 05:53:37,504 - INFO - competition_waste_generator - Initialized generator with 6 waste items
-2025-09-18 05:53:37,504 - INFO - competition_waste_generator - ============================================================
-2025-09-18 05:53:37,504 - INFO - competition_waste_generator - COMPETITION WASTE DATASET GENERATOR
-2025-09-18 05:53:37,504 - INFO - competition_waste_generator - ============================================================
-2025-09-18 05:53:37,505 - INFO - competition_waste_generator - Total waste items to generate: 6
-2025-09-18 05:53:37,505 - INFO - competition_waste_generator - Categories: menagers, recyclables, dangereux
-2025-09-18 05:53:37,505 - INFO - competition_waste_generator - Zones: residentielle, commerciale, industrielle
-2025-09-18 05:53:37,506 - INFO - competition_waste_generator - Output directory: test_competition_dataset
-2025-09-18 05:53:37,506 - INFO - competition_waste_generator - Starting image generation for all waste items...
-2025-09-18 05:53:37,507 - INFO - competition_waste_generator - Generating 6 new images...
-2025-09-18 05:53:37,509 - INFO - competition_waste_generator - Generating image for: bouteille_plastique (menagers/residentielle)
-2025-09-18 05:53:46,419 - WARNING - competition_waste_generator - Request exception on attempt 1: Invalid URL '1224x1224': No scheme supplied. Perhaps you meant https://1224x1224?
-2025-09-18 05:53:46,419 - INFO - competition_waste_generator - Retry attempt 2/3, waiting 2.4s...
-2025-09-18 05:53:48,777 - WARNING - competition_waste_generator - Request exception on attempt 2: Invalid URL '1224x1224': No scheme supplied. Perhaps you meant https://1224x1224?
-2025-09-18 05:53:48,778 - INFO - competition_waste_generator - Retry attempt 3/3, waiting 4.4s...
-2025-09-18 05:53:53,202 - WARNING - competition_waste_generator - Request exception on attempt 3: Invalid URL '1224x1224': No scheme supplied. Perhaps you meant https://1224x1224?
-2025-09-18 05:53:53,203 - ERROR - competition_waste_generator - All retry attempts failed for GET 1224x1224
-2025-09-18 05:53:53,204 - ERROR - competition_waste_generator - Failed to download image: No response
-2025-09-18 05:53:53,205 - ERROR - competition_waste_generator - Failed to download image for bouteille_plastique
-2025-09-18 05:53:53,205 - INFO - competition_waste_generator - Generating image for: sac_plastique (menagers/residentielle)
-2025-09-18 05:53:53,205 - ERROR - competition_waste_generator - ✗ Failed: bouteille_plastique
-2025-09-18 05:56:30,235 - INFO - competition_waste_generator - Freepik API initialized with key: FPSX94e4a9...
-2025-09-18 05:56:30,236 - INFO - competition_waste_generator - Initialized generator with 6 waste items
-2025-09-18 05:56:30,237 - INFO - competition_waste_generator - ============================================================
-2025-09-18 05:56:30,237 - INFO - competition_waste_generator - COMPETITION WASTE DATASET GENERATOR
-2025-09-18 05:56:30,238 - INFO - competition_waste_generator - ============================================================
-2025-09-18 05:56:30,239 - INFO - competition_waste_generator - Total waste items to generate: 6
-2025-09-18 05:56:30,241 - INFO - competition_waste_generator - Categories: menagers, recyclables, dangereux
-2025-09-18 05:56:30,241 - INFO - competition_waste_generator - Zones: residentielle, commerciale, industrielle
-2025-09-18 05:56:30,241 - INFO - competition_waste_generator - Output directory: test_competition_dataset
-2025-09-18 05:56:30,241 - INFO - competition_waste_generator - Starting image generation for all waste items...
-2025-09-18 05:56:30,242 - INFO - competition_waste_generator - Generating 6 new images...
-2025-09-18 05:56:30,243 - INFO - competition_waste_generator - Generating image for: bouteille_plastique (menagers/residentielle)
-2025-09-18 05:56:39,201 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 05:56:42,847 - INFO - competition_waste_generator - ✓ Successfully generated image for bouteille_plastique
-2025-09-18 05:56:42,848 - INFO - competition_waste_generator - Generating image for: sac_plastique (menagers/residentielle)
-2025-09-18 05:56:42,855 - INFO - competition_waste_generator - ✓ Generated: bouteille_plastique
-2025-09-18 05:56:51,561 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 05:56:54,639 - INFO - competition_waste_generator - ✓ Successfully generated image for sac_plastique
-2025-09-18 05:56:54,640 - INFO - competition_waste_generator - Generating image for: papier_blanc (recyclables/commerciale)
-2025-09-18 05:56:54,669 - INFO - competition_waste_generator - ✓ Generated: sac_plastique
-2025-09-18 05:57:05,049 - WARNING - competition_waste_generator - API connectivity test failed: HTTPSConnectionPool(host='api.freepik.com', port=443): Read timed out. (read timeout=10)
-2025-09-18 05:57:05,049 - ERROR - competition_waste_generator - API connectivity test failed
-2025-09-18 05:57:05,050 - INFO - competition_waste_generator - Generating image for: carton_propre (recyclables/commerciale)
-2025-09-18 05:57:05,050 - ERROR - competition_waste_generator - ✗ Failed: papier_blanc
-2025-09-18 05:57:16,441 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 05:57:19,900 - INFO - competition_waste_generator - ✓ Successfully generated image for carton_propre
-2025-09-18 05:57:19,901 - INFO - competition_waste_generator - Generating image for: pile_batterie (dangereux/residentielle)
-2025-09-18 05:57:19,948 - INFO - competition_waste_generator - ✓ Generated: carton_propre
-2025-09-18 05:57:28,436 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 05:57:32,261 - INFO - competition_waste_generator - ✓ Successfully generated image for pile_batterie
-2025-09-18 05:57:32,262 - INFO - competition_waste_generator - Generating image for: produit_nettoyage (dangereux/residentielle)
-2025-09-18 05:57:32,317 - INFO - competition_waste_generator - ✓ Generated: pile_batterie
-2025-09-18 05:57:41,223 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 05:57:44,710 - INFO - competition_waste_generator - ✓ Successfully generated image for produit_nettoyage
-2025-09-18 05:57:44,776 - INFO - competition_waste_generator - ✓ Generated: produit_nettoyage
-2025-09-18 05:57:44,779 - INFO - competition_waste_generator - Generating PDFs...
-2025-09-18 05:57:44,780 - INFO - competition_waste_generator - Creating PDF for category: menagers (2 items)
-2025-09-18 05:57:44,781 - INFO - competition_waste_generator - Creating PDF for category: menagers
-2025-09-18 05:57:45,247 - ERROR - competition_waste_generator - Error creating PDF for menagers: '_io.BytesIO' object has no attribute 'format'
-2025-09-18 05:57:45,247 - INFO - competition_waste_generator - Creating PDF for category: recyclables (1 items)
-2025-09-18 05:57:45,248 - INFO - competition_waste_generator - Creating PDF for category: recyclables
-2025-09-18 05:57:45,302 - ERROR - competition_waste_generator - Error creating PDF for recyclables: '_io.BytesIO' object has no attribute 'format'
-2025-09-18 05:57:45,303 - INFO - competition_waste_generator - Creating PDF for category: dangereux (2 items)
-2025-09-18 05:57:45,304 - INFO - competition_waste_generator - Creating PDF for category: dangereux
-2025-09-18 05:57:45,384 - ERROR - competition_waste_generator - Error creating PDF for dangereux: '_io.BytesIO' object has no attribute 'format'
-2025-09-18 05:57:45,384 - INFO - competition_waste_generator - ============================================================
-2025-09-18 05:57:45,384 - INFO - competition_waste_generator - GENERATION COMPLETE!
-2025-09-18 05:57:45,385 - INFO - competition_waste_generator - ✓ Generated 5/6 images
-2025-09-18 05:57:45,385 - INFO - competition_waste_generator - ✓ Created 0 PDF files
-2025-09-18 05:57:45,385 - INFO - competition_waste_generator - ✓ Total time: 75.1 seconds
-2025-09-18 05:57:45,386 - INFO - competition_waste_generator - ✓ Output: test_competition_dataset
-2025-09-18 05:57:45,386 - INFO - competition_waste_generator - ============================================================
-2025-09-18 05:59:06,512 - INFO - competition_waste_generator - Freepik API initialized with key: FPSX94e4a9...
-2025-09-18 05:59:06,513 - INFO - competition_waste_generator - Initialized generator with 6 waste items
-2025-09-18 05:59:06,513 - INFO - competition_waste_generator - ============================================================
-2025-09-18 05:59:06,514 - INFO - competition_waste_generator - COMPETITION WASTE DATASET GENERATOR
-2025-09-18 05:59:06,514 - INFO - competition_waste_generator - ============================================================
-2025-09-18 05:59:06,514 - INFO - competition_waste_generator - Total waste items to generate: 6
-2025-09-18 05:59:06,514 - INFO - competition_waste_generator - Categories: menagers, recyclables, dangereux
-2025-09-18 05:59:06,514 - INFO - competition_waste_generator - Zones: residentielle, commerciale, industrielle
-2025-09-18 05:59:06,514 - INFO - competition_waste_generator - Output directory: test_competition_dataset
-2025-09-18 05:59:06,514 - INFO - competition_waste_generator - Starting image generation for all waste items...
-2025-09-18 05:59:06,515 - INFO - competition_waste_generator - Generating 6 new images...
-2025-09-18 05:59:06,515 - INFO - competition_waste_generator - Generating image for: bouteille_plastique (menagers/residentielle)
-2025-09-18 05:59:15,243 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 05:59:18,624 - INFO - competition_waste_generator - ✓ Successfully generated image for bouteille_plastique
-2025-09-18 05:59:18,625 - INFO - competition_waste_generator - Generating image for: sac_plastique (menagers/residentielle)
-2025-09-18 05:59:18,635 - INFO - competition_waste_generator - ✓ Generated: bouteille_plastique
-2025-09-18 05:59:37,464 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 05:59:40,522 - INFO - competition_waste_generator - ✓ Successfully generated image for sac_plastique
-2025-09-18 05:59:40,522 - INFO - competition_waste_generator - Generating image for: papier_blanc (recyclables/commerciale)
-2025-09-18 05:59:40,551 - INFO - competition_waste_generator - ✓ Generated: sac_plastique
-2025-09-18 05:59:48,957 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 05:59:51,966 - INFO - competition_waste_generator - ✓ Successfully generated image for papier_blanc
-2025-09-18 05:59:51,966 - INFO - competition_waste_generator - Generating image for: carton_propre (recyclables/commerciale)
-2025-09-18 05:59:52,008 - INFO - competition_waste_generator - ✓ Generated: papier_blanc
-2025-09-18 06:00:10,633 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:00:13,755 - INFO - competition_waste_generator - ✓ Successfully generated image for carton_propre
-2025-09-18 06:00:13,755 - INFO - competition_waste_generator - Generating image for: pile_batterie (dangereux/residentielle)
-2025-09-18 06:00:13,812 - INFO - competition_waste_generator - ✓ Generated: carton_propre
-2025-09-18 06:00:22,552 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:00:26,078 - INFO - competition_waste_generator - ✓ Successfully generated image for pile_batterie
-2025-09-18 06:00:26,079 - INFO - competition_waste_generator - Generating image for: produit_nettoyage (dangereux/residentielle)
-2025-09-18 06:00:26,149 - INFO - competition_waste_generator - ✓ Generated: pile_batterie
-2025-09-18 06:00:35,669 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:00:38,710 - INFO - competition_waste_generator - ✓ Successfully generated image for produit_nettoyage
-2025-09-18 06:00:38,793 - INFO - competition_waste_generator - ✓ Generated: produit_nettoyage
-2025-09-18 06:00:38,795 - INFO - competition_waste_generator - Generating PDFs...
-2025-09-18 06:00:38,796 - INFO - competition_waste_generator - Creating PDF for category: menagers (2 items)
-2025-09-18 06:00:38,797 - INFO - competition_waste_generator - Creating PDF for category: menagers
-2025-09-18 06:00:39,059 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_menagers.pdf
-2025-09-18 06:00:39,060 - INFO - competition_waste_generator - Creating PDF for category: recyclables (2 items)
-2025-09-18 06:00:39,060 - INFO - competition_waste_generator - Creating PDF for category: recyclables
-2025-09-18 06:00:39,349 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_recyclables.pdf
-2025-09-18 06:00:39,349 - INFO - competition_waste_generator - Creating PDF for category: dangereux (2 items)
-2025-09-18 06:00:39,350 - INFO - competition_waste_generator - Creating PDF for category: dangereux
-2025-09-18 06:00:39,639 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_dangereux.pdf
-2025-09-18 06:00:39,640 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:00:39,641 - INFO - competition_waste_generator - GENERATION COMPLETE!
-2025-09-18 06:00:39,641 - INFO - competition_waste_generator - ✓ Generated 6/6 images
-2025-09-18 06:00:39,641 - INFO - competition_waste_generator - ✓ Created 3 PDF files
-2025-09-18 06:00:39,641 - INFO - competition_waste_generator - ✓ Total time: 93.1 seconds
-2025-09-18 06:00:39,642 - INFO - competition_waste_generator - ✓ Output: test_competition_dataset
-2025-09-18 06:00:39,642 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:11:59,421 - INFO - competition_waste_generator - Freepik API initialized with key: FPSX94e4a9...
-2025-09-18 06:11:59,422 - INFO - competition_waste_generator - Initialized generator with 6 waste items
-2025-09-18 06:11:59,422 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:11:59,422 - INFO - competition_waste_generator - COMPETITION WASTE DATASET GENERATOR
-2025-09-18 06:11:59,422 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:11:59,422 - INFO - competition_waste_generator - Total waste items to generate: 6
-2025-09-18 06:11:59,422 - INFO - competition_waste_generator - Categories: menagers, recyclables, dangereux
-2025-09-18 06:11:59,423 - INFO - competition_waste_generator - Zones: residentielle, commerciale, industrielle
-2025-09-18 06:11:59,423 - INFO - competition_waste_generator - Output directory: test_competition_dataset
-2025-09-18 06:11:59,423 - INFO - competition_waste_generator - Starting image generation for all waste items...
-2025-09-18 06:11:59,449 - INFO - competition_waste_generator - Loaded 6 cached images
-2025-09-18 06:11:59,449 - INFO - competition_waste_generator - Using cached image for bouteille_plastique
-2025-09-18 06:11:59,449 - INFO - competition_waste_generator - Using cached image for sac_plastique
-2025-09-18 06:11:59,450 - INFO - competition_waste_generator - Using cached image for papier_blanc
-2025-09-18 06:11:59,450 - INFO - competition_waste_generator - Using cached image for carton_propre
-2025-09-18 06:11:59,450 - INFO - competition_waste_generator - Using cached image for pile_batterie
-2025-09-18 06:11:59,450 - INFO - competition_waste_generator - Using cached image for produit_nettoyage
-2025-09-18 06:11:59,450 - INFO - competition_waste_generator - All images already cached!
-2025-09-18 06:11:59,450 - INFO - competition_waste_generator - Generating PDFs...
-2025-09-18 06:11:59,450 - INFO - competition_waste_generator - Creating PDF for category: menagers (2 items)
-2025-09-18 06:12:00,307 - ERROR - competition_waste_generator - Error creating summary page: 'Helvetica-Italic'
-2025-09-18 06:12:00,307 - INFO - competition_waste_generator - Creating image pages for category: menagers
-2025-09-18 06:12:00,644 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_menagers.pdf
-2025-09-18 06:12:00,644 - INFO - competition_waste_generator - Creating PDF for category: recyclables (2 items)
-2025-09-18 06:12:01,012 - ERROR - competition_waste_generator - Error creating summary page: 'Helvetica-Italic'
-2025-09-18 06:12:01,012 - INFO - competition_waste_generator - Creating image pages for category: recyclables
-2025-09-18 06:12:01,311 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_recyclables.pdf
-2025-09-18 06:12:01,312 - INFO - competition_waste_generator - Creating PDF for category: dangereux (2 items)
-2025-09-18 06:12:01,807 - ERROR - competition_waste_generator - Error creating summary page: 'Helvetica-Italic'
-2025-09-18 06:12:01,808 - INFO - competition_waste_generator - Creating image pages for category: dangereux
-2025-09-18 06:12:02,155 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_dangereux.pdf
-2025-09-18 06:12:02,155 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:12:02,155 - INFO - competition_waste_generator - GENERATION COMPLETE!
-2025-09-18 06:12:02,156 - INFO - competition_waste_generator - ✓ Generated 6/6 images
-2025-09-18 06:12:02,156 - INFO - competition_waste_generator - ✓ Created 3 PDF files
-2025-09-18 06:12:02,156 - INFO - competition_waste_generator - ✓ Total time: 2.7 seconds
-2025-09-18 06:12:02,156 - INFO - competition_waste_generator - ✓ Output: test_competition_dataset
-2025-09-18 06:12:02,156 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:25:36,525 - INFO - competition_waste_generator - Freepik API initialisé avec 3 clé(s)
-2025-09-18 06:25:36,526 - INFO - competition_waste_generator -   Clé 1: FPSX94e4a9...
-2025-09-18 06:25:36,527 - INFO - competition_waste_generator -   Clé 2: FPSX3e8841...
-2025-09-18 06:25:36,528 - INFO - competition_waste_generator -   Clé 3: FPSXb87eda...
-2025-09-18 06:25:36,530 - INFO - competition_waste_generator - Initialized generator with 6 waste items
-2025-09-18 06:25:36,530 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:25:36,530 - INFO - competition_waste_generator - COMPETITION WASTE DATASET GENERATOR
-2025-09-18 06:25:36,531 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:25:36,531 - INFO - competition_waste_generator - Total waste items to generate: 6
-2025-09-18 06:25:36,531 - INFO - competition_waste_generator - Categories: menagers, recyclables, dangereux
-2025-09-18 06:25:36,531 - INFO - competition_waste_generator - Zones: residentielle, commerciale, industrielle
-2025-09-18 06:25:36,531 - INFO - competition_waste_generator - Output directory: test_competition_dataset
-2025-09-18 06:25:36,531 - INFO - competition_waste_generator - Starting image generation for all waste items...
-2025-09-18 06:25:36,557 - INFO - competition_waste_generator - Loaded 6 cached images
-2025-09-18 06:25:36,557 - INFO - competition_waste_generator - Using cached image for bouteille_plastique
-2025-09-18 06:25:36,557 - INFO - competition_waste_generator - Using cached image for sac_plastique
-2025-09-18 06:25:36,557 - INFO - competition_waste_generator - Using cached image for papier_blanc
-2025-09-18 06:25:36,558 - INFO - competition_waste_generator - Using cached image for carton_propre
-2025-09-18 06:25:36,558 - INFO - competition_waste_generator - Using cached image for pile_batterie
-2025-09-18 06:25:36,558 - INFO - competition_waste_generator - Using cached image for produit_nettoyage
-2025-09-18 06:25:36,558 - INFO - competition_waste_generator - All images already cached!
-2025-09-18 06:25:36,558 - INFO - competition_waste_generator - Generating PDFs...
-2025-09-18 06:25:36,558 - INFO - competition_waste_generator - Creating PDF for category: menagers (2 items)
-2025-09-18 06:25:36,896 - ERROR - competition_waste_generator - Error creating summary page: 'Helvetica-Italic'
-2025-09-18 06:25:36,897 - INFO - competition_waste_generator - Creating image pages for category: menagers
-2025-09-18 06:25:37,227 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_menagers.pdf
-2025-09-18 06:25:37,227 - INFO - competition_waste_generator - Creating PDF for category: recyclables (2 items)
-2025-09-18 06:25:37,539 - ERROR - competition_waste_generator - Error creating summary page: 'Helvetica-Italic'
-2025-09-18 06:25:37,539 - INFO - competition_waste_generator - Creating image pages for category: recyclables
-2025-09-18 06:25:37,827 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_recyclables.pdf
-2025-09-18 06:25:37,827 - INFO - competition_waste_generator - Creating PDF for category: dangereux (2 items)
-2025-09-18 06:25:38,339 - ERROR - competition_waste_generator - Error creating summary page: 'Helvetica-Italic'
-2025-09-18 06:25:38,340 - INFO - competition_waste_generator - Creating image pages for category: dangereux
-2025-09-18 06:25:38,776 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_dangereux.pdf
-2025-09-18 06:25:38,777 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:25:38,778 - INFO - competition_waste_generator - GENERATION COMPLETE!
-2025-09-18 06:25:38,778 - INFO - competition_waste_generator - ✓ Generated 6/6 images
-2025-09-18 06:25:38,779 - INFO - competition_waste_generator - ✓ Created 3 PDF files
-2025-09-18 06:25:38,780 - INFO - competition_waste_generator - ✓ Total time: 2.2 seconds
-2025-09-18 06:25:38,780 - INFO - competition_waste_generator - ✓ Output: test_competition_dataset
-2025-09-18 06:25:38,781 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:26:33,039 - INFO - competition_waste_generator - Freepik API initialisé avec 3 clé(s)
-2025-09-18 06:26:33,040 - INFO - competition_waste_generator -   Clé 1: FPSX94e4a9...
-2025-09-18 06:26:33,040 - INFO - competition_waste_generator -   Clé 2: FPSX3e8841...
-2025-09-18 06:26:33,040 - INFO - competition_waste_generator -   Clé 3: FPSXb87eda...
-2025-09-18 06:26:33,041 - INFO - competition_waste_generator - Initialized generator with 6 waste items
-2025-09-18 06:26:33,041 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:26:33,041 - INFO - competition_waste_generator - COMPETITION WASTE DATASET GENERATOR
-2025-09-18 06:26:33,041 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:26:33,042 - INFO - competition_waste_generator - Total waste items to generate: 6
-2025-09-18 06:26:33,042 - INFO - competition_waste_generator - Categories: menagers, recyclables, dangereux
-2025-09-18 06:26:33,042 - INFO - competition_waste_generator - Zones: residentielle, commerciale, industrielle
-2025-09-18 06:26:33,042 - INFO - competition_waste_generator - Output directory: test_competition_dataset
-2025-09-18 06:26:33,042 - INFO - competition_waste_generator - Starting image generation for all waste items...
-2025-09-18 06:26:33,075 - INFO - competition_waste_generator - Loaded 6 cached images
-2025-09-18 06:26:33,075 - INFO - competition_waste_generator - Using cached image for bouteille_plastique
-2025-09-18 06:26:33,075 - INFO - competition_waste_generator - Using cached image for sac_plastique
-2025-09-18 06:26:33,076 - INFO - competition_waste_generator - Using cached image for papier_blanc
-2025-09-18 06:26:33,076 - INFO - competition_waste_generator - Using cached image for carton_propre
-2025-09-18 06:26:33,076 - INFO - competition_waste_generator - Using cached image for pile_batterie
-2025-09-18 06:26:33,076 - INFO - competition_waste_generator - Using cached image for produit_nettoyage
-2025-09-18 06:26:33,077 - INFO - competition_waste_generator - All images already cached!
-2025-09-18 06:26:33,077 - INFO - competition_waste_generator - Generating PDFs...
-2025-09-18 06:26:33,078 - INFO - competition_waste_generator - Creating PDF for category: menagers (2 items)
-2025-09-18 06:26:33,085 - INFO - competition_waste_generator - Creating image pages for category: menagers
-2025-09-18 06:26:33,463 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_menagers.pdf
-2025-09-18 06:26:33,463 - INFO - competition_waste_generator - Creating PDF for category: recyclables (2 items)
-2025-09-18 06:26:33,468 - INFO - competition_waste_generator - Creating image pages for category: recyclables
-2025-09-18 06:26:33,771 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_recyclables.pdf
-2025-09-18 06:26:33,771 - INFO - competition_waste_generator - Creating PDF for category: dangereux (2 items)
-2025-09-18 06:26:33,775 - INFO - competition_waste_generator - Creating image pages for category: dangereux
-2025-09-18 06:26:34,110 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_dangereux.pdf
-2025-09-18 06:26:34,111 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:26:34,111 - INFO - competition_waste_generator - GENERATION COMPLETE!
-2025-09-18 06:26:34,111 - INFO - competition_waste_generator - ✓ Generated 6/6 images
-2025-09-18 06:26:34,111 - INFO - competition_waste_generator - ✓ Created 3 PDF files
-2025-09-18 06:26:34,111 - INFO - competition_waste_generator - ✓ Total time: 1.1 seconds
-2025-09-18 06:26:34,112 - INFO - competition_waste_generator - ✓ Output: test_competition_dataset
-2025-09-18 06:26:34,112 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:32:07,863 - INFO - competition_waste_generator - Freepik API initialisé avec 3 clé(s)
-2025-09-18 06:32:07,863 - INFO - competition_waste_generator -   Clé 1: FPSX94e4a9...
-2025-09-18 06:32:07,864 - INFO - competition_waste_generator -   Clé 2: FPSX3e8841...
-2025-09-18 06:32:07,864 - INFO - competition_waste_generator -   Clé 3: FPSXb87eda...
-2025-09-18 06:32:07,865 - INFO - competition_waste_generator - Initialized generator with 6 waste items
-2025-09-18 06:32:07,865 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:32:07,865 - INFO - competition_waste_generator - COMPETITION WASTE DATASET GENERATOR
-2025-09-18 06:32:07,865 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:32:07,866 - INFO - competition_waste_generator - Total waste items to generate: 6
-2025-09-18 06:32:07,866 - INFO - competition_waste_generator - Categories: menagers, recyclables, dangereux
-2025-09-18 06:32:07,866 - INFO - competition_waste_generator - Zones: residentielle, commerciale, industrielle
-2025-09-18 06:32:07,866 - INFO - competition_waste_generator - Output directory: test_competition_dataset
-2025-09-18 06:32:07,866 - INFO - competition_waste_generator - Starting image generation for all waste items...
-2025-09-18 06:32:07,866 - INFO - competition_waste_generator - Generating 6 new images...
-2025-09-18 06:32:07,867 - INFO - competition_waste_generator - Generating image for: bouteille_plastique (menagers/residentielle)
-2025-09-18 06:32:10,187 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:32:11,585 - WARNING - competition_waste_generator - Erreur inattendue 404 avec clé FPSX3e8841... sur l'attempt 1
-2025-09-18 06:32:11,586 - INFO - competition_waste_generator - Retry attempt 2/3 avec clé FPSX3e8841..., waiting 2.3s...
-2025-09-18 06:32:14,557 - WARNING - competition_waste_generator - Erreur inattendue 404 avec clé FPSX3e8841... sur l'attempt 2
-2025-09-18 06:32:14,564 - INFO - competition_waste_generator - Retry attempt 3/3 avec clé FPSX3e8841..., waiting 4.4s...
-2025-09-18 06:32:19,547 - WARNING - competition_waste_generator - Erreur inattendue 404 avec clé FPSX3e8841... sur l'attempt 3
-2025-09-18 06:32:19,548 - WARNING - competition_waste_generator - Erreur persistante, rotation de la clé FPSX3e8841...
-2025-09-18 06:32:19,550 - WARNING - competition_waste_generator - Clé API FPSX3e8841... marquée comme temporairement indisponible
-2025-09-18 06:32:19,550 - INFO - competition_waste_generator - Rotation vers la clé: FPSXb87eda...
-2025-09-18 06:32:19,550 - WARNING - competition_waste_generator - Clé API FPSX3e8841... marquée comme temporairement indisponible
-2025-09-18 06:32:19,550 - INFO - competition_waste_generator - Rotation vers la clé: FPSXb87eda...
-2025-09-18 06:32:20,116 - WARNING - competition_waste_generator - Erreur inattendue 404 avec clé FPSXb87eda... sur l'attempt 1
-2025-09-18 06:32:20,117 - INFO - competition_waste_generator - Retry attempt 2/3 avec clé FPSXb87eda..., waiting 2.1s...
-2025-09-18 06:32:22,848 - WARNING - competition_waste_generator - Erreur inattendue 404 avec clé FPSXb87eda... sur l'attempt 2
-2025-09-18 06:32:22,849 - INFO - competition_waste_generator - Retry attempt 3/3 avec clé FPSXb87eda..., waiting 4.4s...
-2025-09-18 06:32:27,956 - WARNING - competition_waste_generator - Erreur inattendue 404 avec clé FPSXb87eda... sur l'attempt 3
-2025-09-18 06:32:27,961 - WARNING - competition_waste_generator - Erreur persistante, rotation de la clé FPSXb87eda...
-2025-09-18 06:32:27,964 - WARNING - competition_waste_generator - Clé API FPSXb87eda... marquée comme temporairement indisponible
-2025-09-18 06:32:27,966 - INFO - competition_waste_generator - Rotation vers la clé: FPSX94e4a9...
-2025-09-18 06:32:27,970 - WARNING - competition_waste_generator - Clé API FPSXb87eda... marquée comme temporairement indisponible
-2025-09-18 06:32:27,973 - INFO - competition_waste_generator - Rotation vers la clé: FPSX94e4a9...
-2025-09-18 06:32:28,673 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:32:32,852 - INFO - competition_waste_generator - ✓ Successfully generated image for bouteille_plastique
-2025-09-18 06:32:32,853 - INFO - competition_waste_generator - Generating image for: sac_plastique (menagers/residentielle)
-2025-09-18 06:32:32,864 - INFO - competition_waste_generator - ✓ Generated: bouteille_plastique
-2025-09-18 06:32:34,678 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:32:41,512 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:32:45,067 - INFO - competition_waste_generator - ✓ Successfully generated image for sac_plastique
-2025-09-18 06:32:45,067 - INFO - competition_waste_generator - Generating image for: papier_blanc (recyclables/commerciale)
-2025-09-18 06:32:45,111 - INFO - competition_waste_generator - ✓ Generated: sac_plastique
-2025-09-18 06:32:46,891 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:32:53,788 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:32:57,252 - INFO - competition_waste_generator - ✓ Successfully generated image for papier_blanc
-2025-09-18 06:32:57,252 - INFO - competition_waste_generator - Generating image for: carton_propre (recyclables/commerciale)
-2025-09-18 06:32:57,322 - INFO - competition_waste_generator - ✓ Generated: papier_blanc
-2025-09-18 06:32:59,090 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:33:05,996 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:33:09,527 - INFO - competition_waste_generator - ✓ Successfully generated image for carton_propre
-2025-09-18 06:33:09,527 - INFO - competition_waste_generator - Generating image for: pile_batterie (dangereux/residentielle)
-2025-09-18 06:33:09,614 - INFO - competition_waste_generator - ✓ Generated: carton_propre
-2025-09-18 06:33:21,572 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:33:28,352 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:33:31,869 - INFO - competition_waste_generator - ✓ Successfully generated image for pile_batterie
-2025-09-18 06:33:31,870 - INFO - competition_waste_generator - Generating image for: produit_nettoyage (dangereux/residentielle)
-2025-09-18 06:33:31,989 - INFO - competition_waste_generator - ✓ Generated: pile_batterie
-2025-09-18 06:33:33,727 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:33:40,571 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:33:44,532 - INFO - competition_waste_generator - ✓ Successfully generated image for produit_nettoyage
-2025-09-18 06:33:44,670 - INFO - competition_waste_generator - ✓ Generated: produit_nettoyage
-2025-09-18 06:33:44,671 - INFO - competition_waste_generator - Generating PDFs...
-2025-09-18 06:33:44,671 - INFO - competition_waste_generator - Creating PDF for category: menagers (2 items)
-2025-09-18 06:33:44,674 - INFO - competition_waste_generator - Creating image pages for category: menagers
-2025-09-18 06:33:45,074 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_menagers.pdf
-2025-09-18 06:33:45,074 - INFO - competition_waste_generator - Creating PDF for category: recyclables (2 items)
-2025-09-18 06:33:45,079 - INFO - competition_waste_generator - Creating image pages for category: recyclables
-2025-09-18 06:33:45,490 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_recyclables.pdf
-2025-09-18 06:33:45,491 - INFO - competition_waste_generator - Creating PDF for category: dangereux (2 items)
-2025-09-18 06:33:45,499 - INFO - competition_waste_generator - Creating image pages for category: dangereux
-2025-09-18 06:33:45,934 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_dangereux.pdf
-2025-09-18 06:33:45,934 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:33:45,934 - INFO - competition_waste_generator - GENERATION COMPLETE!
-2025-09-18 06:33:45,935 - INFO - competition_waste_generator - ✓ Generated 6/6 images
-2025-09-18 06:33:45,935 - INFO - competition_waste_generator - ✓ Created 3 PDF files
-2025-09-18 06:33:45,936 - INFO - competition_waste_generator - ✓ Total time: 98.1 seconds
-2025-09-18 06:33:45,936 - INFO - competition_waste_generator - ✓ Output: test_competition_dataset
-2025-09-18 06:33:45,937 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:36:56,057 - INFO - competition_waste_generator - Validation de 3 clé(s) API Freepik...
-2025-09-18 06:36:56,057 - INFO - competition_waste_generator - Validation clé 1 (FPSX94e4a9...)...
-2025-09-18 06:36:58,282 - INFO - competition_waste_generator - ✓ Clé 1 (FPSX94e4a9...) : Validation OK
-2025-09-18 06:36:58,282 - INFO - competition_waste_generator - Validation clé 2 (FPSX3e8841...)...
-2025-09-18 06:36:59,997 - INFO - competition_waste_generator - ✓ Clé 2 (FPSX3e8841...) : Validation OK
-2025-09-18 06:36:59,998 - INFO - competition_waste_generator - Validation clé 3 (FPSXb87eda...)...
-2025-09-18 06:37:02,000 - INFO - competition_waste_generator - ✓ Clé 3 (FPSXb87eda...) : Validation OK
-2025-09-18 06:37:02,002 - INFO - competition_waste_generator - ✓ 3 clé(s) API valide(s) prête(s) à utiliser
-2025-09-18 06:37:02,003 - INFO - competition_waste_generator -   Clé 1: FPSX94e4a9... ✓
-2025-09-18 06:37:02,003 - INFO - competition_waste_generator -   Clé 2: FPSX3e8841... ✓
-2025-09-18 06:37:02,003 - INFO - competition_waste_generator -   Clé 3: FPSXb87eda... ✓
-2025-09-18 06:37:02,004 - INFO - competition_waste_generator - Initialized generator with 6 waste items
-2025-09-18 06:37:02,004 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:37:02,004 - INFO - competition_waste_generator - COMPETITION WASTE DATASET GENERATOR
-2025-09-18 06:37:02,004 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:37:02,004 - INFO - competition_waste_generator - Total waste items to generate: 6
-2025-09-18 06:37:02,004 - INFO - competition_waste_generator - Categories: menagers, recyclables, dangereux
-2025-09-18 06:37:02,005 - INFO - competition_waste_generator - Zones: residentielle, commerciale, industrielle
-2025-09-18 06:37:02,005 - INFO - competition_waste_generator - Output directory: test_competition_dataset
-2025-09-18 06:37:02,005 - INFO - competition_waste_generator - Starting image generation for all waste items...
-2025-09-18 06:37:02,005 - INFO - competition_waste_generator - Generating 6 new images...
-2025-09-18 06:37:02,006 - INFO - competition_waste_generator - Generating image for: bouteille_plastique (menagers/residentielle)
-2025-09-18 06:37:04,048 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:37:05,376 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSX3e8841... - possible clé invalide
-2025-09-18 06:37:05,376 - INFO - competition_waste_generator - Retry attempt 2/3 avec clé FPSX3e8841..., waiting 2.2s...
-2025-09-18 06:37:08,267 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSX3e8841... - possible clé invalide
-2025-09-18 06:37:08,268 - INFO - competition_waste_generator - Retry attempt 3/3 avec clé FPSX3e8841..., waiting 4.0s...
-2025-09-18 06:37:12,790 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSX3e8841... - possible clé invalide
-2025-09-18 06:37:12,791 - ERROR - competition_waste_generator - Erreurs 404 persistantes - marquage de la clé FPSX3e8841... comme invalide
-2025-09-18 06:37:12,791 - WARNING - competition_waste_generator - Clé API FPSX3e8841... marquée comme temporairement indisponible
-2025-09-18 06:37:12,791 - INFO - competition_waste_generator - Rotation vers la clé: FPSXb87eda...
-2025-09-18 06:37:12,791 - WARNING - competition_waste_generator - Clé API FPSX3e8841... marquée comme temporairement indisponible
-2025-09-18 06:37:12,792 - INFO - competition_waste_generator - Rotation vers la clé: FPSXb87eda...
-2025-09-18 06:37:13,377 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSXb87eda... - possible clé invalide
-2025-09-18 06:37:13,378 - INFO - competition_waste_generator - Retry attempt 2/3 avec clé FPSXb87eda..., waiting 2.1s...
-2025-09-18 06:37:16,096 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSXb87eda... - possible clé invalide
-2025-09-18 06:37:16,098 - INFO - competition_waste_generator - Retry attempt 3/3 avec clé FPSXb87eda..., waiting 4.5s...
-2025-09-18 06:37:21,409 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSXb87eda... - possible clé invalide
-2025-09-18 06:37:21,410 - ERROR - competition_waste_generator - Erreurs 404 persistantes - marquage de la clé FPSXb87eda... comme invalide
-2025-09-18 06:37:21,410 - WARNING - competition_waste_generator - Clé API FPSXb87eda... marquée comme temporairement indisponible
-2025-09-18 06:37:21,410 - INFO - competition_waste_generator - Rotation vers la clé: FPSX94e4a9...
-2025-09-18 06:37:21,410 - WARNING - competition_waste_generator - Clé API FPSXb87eda... marquée comme temporairement indisponible
-2025-09-18 06:37:21,411 - INFO - competition_waste_generator - Rotation vers la clé: FPSX94e4a9...
-2025-09-18 06:37:21,976 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:37:26,029 - INFO - competition_waste_generator - ✓ Successfully generated image for bouteille_plastique
-2025-09-18 06:37:26,029 - INFO - competition_waste_generator - Generating image for: sac_plastique (menagers/residentielle)
-2025-09-18 06:37:26,041 - INFO - competition_waste_generator - ✓ Generated: bouteille_plastique
-2025-09-18 06:37:27,817 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:37:34,721 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:37:44,442 - INFO - competition_waste_generator - ✓ Successfully generated image for sac_plastique
-2025-09-18 06:37:44,443 - INFO - competition_waste_generator - Generating image for: papier_blanc (recyclables/commerciale)
-2025-09-18 06:37:44,484 - INFO - competition_waste_generator - ✓ Generated: sac_plastique
-2025-09-18 06:37:56,374 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:38:03,371 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:38:06,801 - INFO - competition_waste_generator - ✓ Successfully generated image for papier_blanc
-2025-09-18 06:38:06,801 - INFO - competition_waste_generator - Generating image for: carton_propre (recyclables/commerciale)
-2025-09-18 06:38:06,863 - INFO - competition_waste_generator - ✓ Generated: papier_blanc
-2025-09-18 06:38:08,727 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:38:28,554 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:38:34,356 - INFO - competition_waste_generator - ✓ Successfully generated image for carton_propre
-2025-09-18 06:38:34,358 - INFO - competition_waste_generator - Generating image for: pile_batterie (dangereux/residentielle)
-2025-09-18 06:38:34,488 - INFO - competition_waste_generator - ✓ Generated: carton_propre
-2025-09-18 06:38:36,692 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:38:43,912 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:38:47,388 - INFO - competition_waste_generator - ✓ Successfully generated image for pile_batterie
-2025-09-18 06:38:47,396 - INFO - competition_waste_generator - Generating image for: produit_nettoyage (dangereux/residentielle)
-2025-09-18 06:38:47,607 - INFO - competition_waste_generator - ✓ Generated: pile_batterie
-2025-09-18 06:38:49,846 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:38:57,350 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:39:04,133 - INFO - competition_waste_generator - ✓ Successfully generated image for produit_nettoyage
-2025-09-18 06:39:04,400 - INFO - competition_waste_generator - ✓ Generated: produit_nettoyage
-2025-09-18 06:39:04,446 - INFO - competition_waste_generator - Generating PDFs...
-2025-09-18 06:39:04,453 - INFO - competition_waste_generator - Creating PDF for category: menagers (2 items)
-2025-09-18 06:39:04,513 - INFO - competition_waste_generator - Creating image pages for category: menagers
-2025-09-18 06:39:05,553 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_menagers.pdf
-2025-09-18 06:39:05,559 - INFO - competition_waste_generator - Creating PDF for category: recyclables (2 items)
-2025-09-18 06:39:05,580 - INFO - competition_waste_generator - Creating image pages for category: recyclables
-2025-09-18 06:39:06,660 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_recyclables.pdf
-2025-09-18 06:39:06,660 - INFO - competition_waste_generator - Creating PDF for category: dangereux (2 items)
-2025-09-18 06:39:06,665 - INFO - competition_waste_generator - Creating image pages for category: dangereux
-2025-09-18 06:39:07,579 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_dangereux.pdf
-2025-09-18 06:39:07,580 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:39:07,580 - INFO - competition_waste_generator - GENERATION COMPLETE!
-2025-09-18 06:39:07,580 - INFO - competition_waste_generator - ✓ Generated 6/6 images
-2025-09-18 06:39:07,581 - INFO - competition_waste_generator - ✓ Created 3 PDF files
-2025-09-18 06:39:07,581 - INFO - competition_waste_generator - ✓ Total time: 125.6 seconds
-2025-09-18 06:39:07,581 - INFO - competition_waste_generator - ✓ Output: test_competition_dataset
-2025-09-18 06:39:07,582 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:41:18,400 - INFO - competition_waste_generator - Validation de 3 clé(s) API Freepik...
-2025-09-18 06:41:18,401 - INFO - competition_waste_generator - Validation clé 1 (FPSX94e4a9...)...
-2025-09-18 06:41:43,225 - WARNING - competition_waste_generator - ⚠️  Clé 1 (FPSX94e4a9...) : Erreur de test (HTTPSConnectionPool(host='docs.freepik.com', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x7f7d5e9a6c30>, 'Connection to docs.freepik.com timed out. (connect timeout=10)'))) - garde quand même
-2025-09-18 06:41:43,226 - INFO - competition_waste_generator - Validation clé 2 (FPSX3e8841...)...
-2025-09-18 06:42:03,995 - WARNING - competition_waste_generator - ⚠️  Clé 2 (FPSX3e8841...) : Erreur de test (HTTPSConnectionPool(host='docs.freepik.com', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x7f7d5e9a7a70>, 'Connection to docs.freepik.com timed out. (connect timeout=10)'))) - garde quand même
-2025-09-18 06:42:03,996 - INFO - competition_waste_generator - Validation clé 3 (FPSXb87eda...)...
-2025-09-18 06:42:05,933 - INFO - competition_waste_generator - ✓ Clé 3 (FPSXb87eda...) : Validation OK
-2025-09-18 06:42:05,937 - INFO - competition_waste_generator - ✓ 3 clé(s) API valide(s) prête(s) à utiliser
-2025-09-18 06:42:05,938 - INFO - competition_waste_generator -   Clé 1: FPSX94e4a9... ✓
-2025-09-18 06:42:05,938 - INFO - competition_waste_generator -   Clé 2: FPSX3e8841... ✓
-2025-09-18 06:42:05,938 - INFO - competition_waste_generator -   Clé 3: FPSXb87eda... ✓
-2025-09-18 06:42:05,939 - INFO - competition_waste_generator - Initialized generator with 6 waste items
-2025-09-18 06:42:05,939 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:42:05,939 - INFO - competition_waste_generator - COMPETITION WASTE DATASET GENERATOR
-2025-09-18 06:42:05,939 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:42:05,939 - INFO - competition_waste_generator - Total waste items to generate: 6
-2025-09-18 06:42:05,940 - INFO - competition_waste_generator - Categories: menagers, recyclables, dangereux
-2025-09-18 06:42:05,940 - INFO - competition_waste_generator - Zones: residentielle, commerciale, industrielle
-2025-09-18 06:42:05,940 - INFO - competition_waste_generator - Output directory: test_competition_dataset
-2025-09-18 06:42:05,940 - INFO - competition_waste_generator - Starting image generation for all waste items...
-2025-09-18 06:42:05,940 - INFO - competition_waste_generator - Generating 6 new images...
-2025-09-18 06:42:05,941 - INFO - competition_waste_generator - Generating image for: bouteille_plastique (menagers/residentielle)
-2025-09-18 06:42:08,007 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:42:09,273 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSX3e8841... - possible clé invalide
-2025-09-18 06:42:09,273 - INFO - competition_waste_generator - Retry attempt 2/3 avec clé FPSX3e8841..., waiting 2.3s...
-2025-09-18 06:42:12,199 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSX3e8841... - possible clé invalide
-2025-09-18 06:42:12,200 - INFO - competition_waste_generator - Retry attempt 3/3 avec clé FPSX3e8841..., waiting 4.2s...
-2025-09-18 06:42:16,956 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSX3e8841... - possible clé invalide
-2025-09-18 06:42:16,957 - ERROR - competition_waste_generator - Erreurs 404 persistantes - marquage de la clé FPSX3e8841... comme invalide
-2025-09-18 06:42:16,957 - WARNING - competition_waste_generator - Clé API FPSX3e8841... marquée comme temporairement indisponible
-2025-09-18 06:42:16,957 - INFO - competition_waste_generator - Rotation vers la clé: FPSXb87eda...
-2025-09-18 06:42:16,957 - WARNING - competition_waste_generator - Clé API FPSX3e8841... marquée comme temporairement indisponible
-2025-09-18 06:42:16,957 - INFO - competition_waste_generator - Rotation vers la clé: FPSXb87eda...
-2025-09-18 06:42:17,475 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSXb87eda... - possible clé invalide
-2025-09-18 06:42:17,476 - INFO - competition_waste_generator - Retry attempt 2/3 avec clé FPSXb87eda..., waiting 2.3s...
-2025-09-18 06:42:20,354 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSXb87eda... - possible clé invalide
-2025-09-18 06:42:20,355 - INFO - competition_waste_generator - Retry attempt 3/3 avec clé FPSXb87eda..., waiting 4.2s...
-2025-09-18 06:42:25,274 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSXb87eda... - possible clé invalide
-2025-09-18 06:42:25,274 - ERROR - competition_waste_generator - Erreurs 404 persistantes - marquage de la clé FPSXb87eda... comme invalide
-2025-09-18 06:42:25,275 - WARNING - competition_waste_generator - Clé API FPSXb87eda... marquée comme temporairement indisponible
-2025-09-18 06:42:25,275 - INFO - competition_waste_generator - Rotation vers la clé: FPSX94e4a9...
-2025-09-18 06:42:25,275 - WARNING - competition_waste_generator - Clé API FPSXb87eda... marquée comme temporairement indisponible
-2025-09-18 06:42:25,275 - INFO - competition_waste_generator - Rotation vers la clé: FPSX94e4a9...
-2025-09-18 06:42:25,816 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:42:30,178 - INFO - competition_waste_generator - ✓ Successfully generated image for bouteille_plastique
-2025-09-18 06:42:30,179 - INFO - competition_waste_generator - Generating image for: sac_plastique (menagers/residentielle)
-2025-09-18 06:42:32,081 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:42:38,995 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:42:42,677 - INFO - competition_waste_generator - ✓ Successfully generated image for sac_plastique
-2025-09-18 06:42:42,677 - INFO - competition_waste_generator - Generating image for: papier_blanc (recyclables/commerciale)
-2025-09-18 06:42:54,461 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:43:01,641 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:43:05,086 - INFO - competition_waste_generator - ✓ Successfully generated image for papier_blanc
-2025-09-18 06:43:05,086 - INFO - competition_waste_generator - Generating image for: carton_propre (recyclables/commerciale)
-2025-09-18 06:43:06,886 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:43:13,756 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:43:17,161 - INFO - competition_waste_generator - ✓ Successfully generated image for carton_propre
-2025-09-18 06:43:17,161 - INFO - competition_waste_generator - Generating image for: pile_batterie (dangereux/residentielle)
-2025-09-18 06:43:19,162 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:43:26,096 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:43:32,980 - INFO - competition_waste_generator - ✓ Successfully generated image for pile_batterie
-2025-09-18 06:43:32,981 - INFO - competition_waste_generator - Generating image for: produit_nettoyage (dangereux/residentielle)
-2025-09-18 06:43:34,807 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:43:42,061 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:43:46,179 - INFO - competition_waste_generator - ✓ Successfully generated image for produit_nettoyage
-2025-09-18 06:54:12,215 - INFO - competition_waste_generator - Validation de 3 clé(s) API Freepik...
-2025-09-18 06:54:12,216 - INFO - competition_waste_generator - Validation clé 1 (FPSX94e4a9...)...
-2025-09-18 06:54:24,389 - INFO - competition_waste_generator - ✓ Clé 1 (FPSX94e4a9...) : Validation OK
-2025-09-18 06:54:24,389 - INFO - competition_waste_generator - Validation clé 2 (FPSX9f5daf...)...
-2025-09-18 06:54:26,311 - INFO - competition_waste_generator - ✓ Clé 2 (FPSX9f5daf...) : Validation OK
-2025-09-18 06:54:26,311 - INFO - competition_waste_generator - Validation clé 3 (FPSXb87eda...)...
-2025-09-18 06:54:28,193 - INFO - competition_waste_generator - ✓ Clé 3 (FPSXb87eda...) : Validation OK
-2025-09-18 06:54:28,195 - INFO - competition_waste_generator - ✓ 3 clé(s) API valide(s) prête(s) à utiliser
-2025-09-18 06:54:28,195 - INFO - competition_waste_generator -   Clé 1: FPSX94e4a9... ✓
-2025-09-18 06:54:28,195 - INFO - competition_waste_generator -   Clé 2: FPSX9f5daf... ✓
-2025-09-18 06:54:28,195 - INFO - competition_waste_generator -   Clé 3: FPSXb87eda... ✓
-2025-09-18 06:54:28,196 - INFO - competition_waste_generator - Initialized generator with 6 waste items
-2025-09-18 06:54:28,196 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:54:28,196 - INFO - competition_waste_generator - COMPETITION WASTE DATASET GENERATOR
-2025-09-18 06:54:28,196 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:54:28,196 - INFO - competition_waste_generator - Total waste items to generate: 6
-2025-09-18 06:54:28,197 - INFO - competition_waste_generator - Categories: menagers, recyclables, dangereux
-2025-09-18 06:54:28,197 - INFO - competition_waste_generator - Zones: residentielle, commerciale, industrielle
-2025-09-18 06:54:28,197 - INFO - competition_waste_generator - Output directory: test_competition_dataset
-2025-09-18 06:54:28,197 - INFO - competition_waste_generator - Starting image generation for all waste items...
-2025-09-18 06:54:28,197 - INFO - competition_waste_generator - Generating 6 new images...
-2025-09-18 06:54:28,198 - INFO - competition_waste_generator - Generating image for: bouteille_plastique (menagers/residentielle)
-2025-09-18 06:54:29,990 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:54:31,175 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSX9f5daf... - possible clé invalide
-2025-09-18 06:54:31,175 - INFO - competition_waste_generator - Retry attempt 2/3 avec clé FPSX9f5daf..., waiting 2.3s...
-2025-09-18 06:54:34,189 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSX9f5daf... - possible clé invalide
-2025-09-18 06:54:34,190 - INFO - competition_waste_generator - Retry attempt 3/3 avec clé FPSX9f5daf..., waiting 4.5s...
-2025-09-18 06:54:39,224 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSX9f5daf... - possible clé invalide
-2025-09-18 06:54:39,225 - ERROR - competition_waste_generator - Erreurs 404 persistantes - marquage de la clé FPSX9f5daf... comme invalide
-2025-09-18 06:54:39,226 - WARNING - competition_waste_generator - Clé API FPSX9f5daf... marquée comme temporairement indisponible
-2025-09-18 06:54:39,226 - INFO - competition_waste_generator - Rotation vers la clé: FPSXb87eda...
-2025-09-18 06:54:39,226 - WARNING - competition_waste_generator - Clé API FPSX9f5daf... marquée comme temporairement indisponible
-2025-09-18 06:54:39,226 - INFO - competition_waste_generator - Rotation vers la clé: FPSXb87eda...
-2025-09-18 06:54:39,778 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSXb87eda... - possible clé invalide
-2025-09-18 06:54:39,779 - INFO - competition_waste_generator - Retry attempt 2/3 avec clé FPSXb87eda..., waiting 2.3s...
-2025-09-18 06:54:42,698 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSXb87eda... - possible clé invalide
-2025-09-18 06:54:42,699 - INFO - competition_waste_generator - Retry attempt 3/3 avec clé FPSXb87eda..., waiting 4.5s...
-2025-09-18 06:54:47,779 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSXb87eda... - possible clé invalide
-2025-09-18 06:54:47,780 - ERROR - competition_waste_generator - Erreurs 404 persistantes - marquage de la clé FPSXb87eda... comme invalide
-2025-09-18 06:54:47,780 - WARNING - competition_waste_generator - Clé API FPSXb87eda... marquée comme temporairement indisponible
-2025-09-18 06:54:47,780 - INFO - competition_waste_generator - Rotation vers la clé: FPSX94e4a9...
-2025-09-18 06:54:47,780 - WARNING - competition_waste_generator - Clé API FPSXb87eda... marquée comme temporairement indisponible
-2025-09-18 06:54:47,780 - INFO - competition_waste_generator - Rotation vers la clé: FPSX94e4a9...
-2025-09-18 06:54:48,306 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:54:55,550 - INFO - competition_waste_generator - ✓ Successfully generated image for bouteille_plastique
-2025-09-18 06:54:55,551 - INFO - competition_waste_generator - Generating image for: sac_plastique (menagers/residentielle)
-2025-09-18 06:54:55,560 - INFO - competition_waste_generator - ✓ Generated: bouteille_plastique
-2025-09-18 06:54:57,390 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:55:04,260 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:55:11,242 - INFO - competition_waste_generator - ✓ Successfully generated image for sac_plastique
-2025-09-18 06:55:11,242 - INFO - competition_waste_generator - Generating image for: papier_blanc (recyclables/commerciale)
-2025-09-18 06:55:11,285 - INFO - competition_waste_generator - ✓ Generated: sac_plastique
-2025-09-18 06:55:13,064 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:55:20,118 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:55:23,824 - INFO - competition_waste_generator - ✓ Successfully generated image for papier_blanc
-2025-09-18 06:55:23,824 - INFO - competition_waste_generator - Generating image for: carton_propre (recyclables/commerciale)
-2025-09-18 06:55:23,891 - INFO - competition_waste_generator - ✓ Generated: papier_blanc
-2025-09-18 06:55:25,685 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:55:32,540 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:55:37,842 - INFO - competition_waste_generator - ✓ Successfully generated image for carton_propre
-2025-09-18 06:55:37,842 - INFO - competition_waste_generator - Generating image for: pile_batterie (dangereux/residentielle)
-2025-09-18 06:55:37,927 - INFO - competition_waste_generator - ✓ Generated: carton_propre
-2025-09-18 06:55:39,592 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:55:46,498 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:55:52,150 - INFO - competition_waste_generator - ✓ Successfully generated image for pile_batterie
-2025-09-18 06:55:52,150 - INFO - competition_waste_generator - Generating image for: produit_nettoyage (dangereux/residentielle)
-2025-09-18 06:55:52,269 - INFO - competition_waste_generator - ✓ Generated: pile_batterie
-2025-09-18 06:55:54,193 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 06:56:01,162 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 06:56:06,895 - INFO - competition_waste_generator - ✓ Successfully generated image for produit_nettoyage
-2025-09-18 06:56:07,035 - INFO - competition_waste_generator - ✓ Generated: produit_nettoyage
-2025-09-18 06:56:07,036 - INFO - competition_waste_generator - Generating PDFs...
-2025-09-18 06:56:07,036 - INFO - competition_waste_generator - Creating PDF for category: menagers (2 items)
-2025-09-18 06:56:07,040 - INFO - competition_waste_generator - Creating image pages for category: menagers
-2025-09-18 06:56:07,330 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_menagers.pdf
-2025-09-18 06:56:07,331 - INFO - competition_waste_generator - Creating PDF for category: recyclables (2 items)
-2025-09-18 06:56:07,335 - INFO - competition_waste_generator - Creating image pages for category: recyclables
-2025-09-18 06:56:07,624 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_recyclables.pdf
-2025-09-18 06:56:07,625 - INFO - competition_waste_generator - Creating PDF for category: dangereux (2 items)
-2025-09-18 06:56:07,629 - INFO - competition_waste_generator - Creating image pages for category: dangereux
-2025-09-18 06:56:07,962 - INFO - competition_waste_generator - ✓ PDF created: test_competition_dataset/competition_waste_dangereux.pdf
-2025-09-18 06:56:07,963 - INFO - competition_waste_generator - ============================================================
-2025-09-18 06:56:07,964 - INFO - competition_waste_generator - GENERATION COMPLETE!
-2025-09-18 06:56:07,965 - INFO - competition_waste_generator - ✓ Generated 6/6 images
-2025-09-18 06:56:07,966 - INFO - competition_waste_generator - ✓ Created 3 PDF files
-2025-09-18 06:56:07,967 - INFO - competition_waste_generator - ✓ Total time: 99.8 seconds
-2025-09-18 06:56:07,968 - INFO - competition_waste_generator - ✓ Output: test_competition_dataset
-2025-09-18 06:56:07,969 - INFO - competition_waste_generator - ============================================================
-2025-09-18 07:20:16,552 - INFO - competition_waste_generator - Validation de 3 clé(s) API Freepik...
-2025-09-18 07:20:16,553 - INFO - competition_waste_generator - Validation clé 1 (FPSX94e4a9...)...
-2025-09-18 07:20:17,452 - INFO - competition_waste_generator - ✓ Clé 1 (FPSX94e4a9...) : Test API réel OK
-2025-09-18 07:20:17,453 - INFO - competition_waste_generator - Validation clé 2 (FPSX9f5daf...)...
-2025-09-18 07:20:18,257 - INFO - competition_waste_generator - ✓ Clé 2 (FPSX9f5daf...) : Test API réel OK
-2025-09-18 07:20:18,258 - INFO - competition_waste_generator - Validation clé 3 (FPSXb87eda...)...
-2025-09-18 07:20:19,184 - INFO - competition_waste_generator - ✓ Clé 3 (FPSXb87eda...) : Test API réel OK
-2025-09-18 07:20:19,186 - INFO - competition_waste_generator - ✓ 3 clé(s) API valide(s) prête(s) à utiliser
-2025-09-18 07:20:19,186 - INFO - competition_waste_generator -   Clé 1: FPSX94e4a9... ✓
-2025-09-18 07:20:19,186 - INFO - competition_waste_generator -   Clé 2: FPSX9f5daf... ✓
-2025-09-18 07:20:19,187 - INFO - competition_waste_generator -   Clé 3: FPSXb87eda... ✓
-2025-09-18 07:20:19,187 - INFO - competition_waste_generator - Initialized generator with 6 waste items
-2025-09-18 07:20:19,187 - INFO - competition_waste_generator - ============================================================
-2025-09-18 07:20:19,187 - INFO - competition_waste_generator - COMPETITION WASTE DATASET GENERATOR
-2025-09-18 07:20:19,188 - INFO - competition_waste_generator - ============================================================
-2025-09-18 07:20:19,188 - INFO - competition_waste_generator - Total waste items to generate: 6
-2025-09-18 07:20:19,188 - INFO - competition_waste_generator - Categories: menagers, recyclables, dangereux
-2025-09-18 07:20:19,188 - INFO - competition_waste_generator - Zones: residentielle, commerciale, industrielle
-2025-09-18 07:20:19,188 - INFO - competition_waste_generator - Output directory: test_competition_dataset
-2025-09-18 07:20:19,189 - INFO - competition_waste_generator - Starting image generation for all waste items...
-2025-09-18 07:20:19,189 - INFO - competition_waste_generator - Generating 6 new images...
-2025-09-18 07:20:19,189 - INFO - competition_waste_generator - Generating image for: bouteille_plastique (menagers/residentielle)
-2025-09-18 07:20:22,316 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 07:20:23,498 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSX9f5daf... - possible clé invalide
-2025-09-18 07:20:23,499 - INFO - competition_waste_generator - Retry attempt 2/3 avec clé FPSX9f5daf..., waiting 2.1s...
-2025-09-18 07:20:26,079 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSX9f5daf... - possible clé invalide
-2025-09-18 07:20:26,081 - INFO - competition_waste_generator - Retry attempt 3/3 avec clé FPSX9f5daf..., waiting 4.4s...
-2025-09-18 07:20:30,965 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSX9f5daf... - possible clé invalide
-2025-09-18 07:20:30,966 - ERROR - competition_waste_generator - Erreurs 404 persistantes - marquage de la clé FPSX9f5daf... comme invalide
-2025-09-18 07:20:30,966 - WARNING - competition_waste_generator - Clé API FPSX9f5daf... marquée comme temporairement indisponible
-2025-09-18 07:20:30,966 - INFO - competition_waste_generator - Rotation vers la clé: FPSXb87eda...
-2025-09-18 07:20:30,967 - WARNING - competition_waste_generator - Clé API FPSX9f5daf... marquée comme temporairement indisponible
-2025-09-18 07:20:30,967 - INFO - competition_waste_generator - Rotation vers la clé: FPSXb87eda...
-2025-09-18 07:20:31,465 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSXb87eda... - possible clé invalide
-2025-09-18 07:20:31,466 - INFO - competition_waste_generator - Retry attempt 2/3 avec clé FPSXb87eda..., waiting 2.0s...
-2025-09-18 07:20:33,994 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSXb87eda... - possible clé invalide
-2025-09-18 07:20:33,995 - INFO - competition_waste_generator - Retry attempt 3/3 avec clé FPSXb87eda..., waiting 4.2s...
-2025-09-18 07:20:38,865 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSXb87eda... - possible clé invalide
-2025-09-18 07:20:38,866 - ERROR - competition_waste_generator - Erreurs 404 persistantes - marquage de la clé FPSXb87eda... comme invalide
-2025-09-18 07:20:38,866 - WARNING - competition_waste_generator - Clé API FPSXb87eda... marquée comme temporairement indisponible
-2025-09-18 07:20:38,866 - INFO - competition_waste_generator - Rotation vers la clé: FPSX94e4a9...
-2025-09-18 07:20:38,866 - WARNING - competition_waste_generator - Clé API FPSXb87eda... marquée comme temporairement indisponible
-2025-09-18 07:20:38,866 - INFO - competition_waste_generator - Rotation vers la clé: FPSX94e4a9...
-2025-09-18 07:20:39,397 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 07:20:45,127 - INFO - competition_waste_generator - ✓ Successfully generated image for bouteille_plastique
-2025-09-18 07:20:45,128 - INFO - competition_waste_generator - Generating image for: sac_plastique (menagers/residentielle)
-2025-09-18 07:20:45,139 - INFO - competition_waste_generator - ✓ Generated: bouteille_plastique
-2025-09-18 07:20:46,771 - INFO - competition_waste_generator - Clé API 1 (FPSX94e4a9...) : connexion OK
-2025-09-18 07:20:53,518 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 07:22:05,834 - INFO - competition_waste_generator - Validation de 3 clé(s) API Freepik...
-2025-09-18 07:22:05,835 - INFO - competition_waste_generator - Validation clé 1 (FPSX9f5daf...)...
-2025-09-18 07:22:06,703 - INFO - competition_waste_generator - ✓ Clé 1 (FPSX9f5daf...) : Test API réel OK
-2025-09-18 07:22:06,704 - INFO - competition_waste_generator - Validation clé 2 (FPSX94e4a9...)...
-2025-09-18 07:22:07,398 - INFO - competition_waste_generator - ✓ Clé 2 (FPSX94e4a9...) : Test API réel OK
-2025-09-18 07:22:07,398 - INFO - competition_waste_generator - Validation clé 3 (FPSXb87eda...)...
-2025-09-18 07:22:08,020 - INFO - competition_waste_generator - ✓ Clé 3 (FPSXb87eda...) : Test API réel OK
-2025-09-18 07:22:08,022 - INFO - competition_waste_generator - ✓ 3 clé(s) API valide(s) prête(s) à utiliser
-2025-09-18 07:22:08,022 - INFO - competition_waste_generator -   Clé 1: FPSX9f5daf... ✓
-2025-09-18 07:22:08,022 - INFO - competition_waste_generator -   Clé 2: FPSX94e4a9... ✓
-2025-09-18 07:22:08,022 - INFO - competition_waste_generator -   Clé 3: FPSXb87eda... ✓
-2025-09-18 07:22:08,023 - INFO - competition_waste_generator - Initialized generator with 6 waste items
-2025-09-18 07:22:08,023 - INFO - competition_waste_generator - ============================================================
-2025-09-18 07:22:08,023 - INFO - competition_waste_generator - COMPETITION WASTE DATASET GENERATOR
-2025-09-18 07:22:08,023 - INFO - competition_waste_generator - ============================================================
-2025-09-18 07:22:08,023 - INFO - competition_waste_generator - Total waste items to generate: 6
-2025-09-18 07:22:08,023 - INFO - competition_waste_generator - Categories: menagers, recyclables, dangereux
-2025-09-18 07:22:08,024 - INFO - competition_waste_generator - Zones: residentielle, commerciale, industrielle
-2025-09-18 07:22:08,024 - INFO - competition_waste_generator - Output directory: test_competition_dataset
-2025-09-18 07:22:08,024 - INFO - competition_waste_generator - Starting image generation for all waste items...
-2025-09-18 07:22:08,029 - INFO - competition_waste_generator - Loaded 1 cached images
-2025-09-18 07:22:08,029 - INFO - competition_waste_generator - Using cached image for bouteille_plastique
-2025-09-18 07:22:08,030 - INFO - competition_waste_generator - Generating 5 new images...
-2025-09-18 07:22:08,030 - INFO - competition_waste_generator - Generating image for: sac_plastique (menagers/residentielle)
-2025-09-18 07:22:09,685 - INFO - competition_waste_generator - Clé API 1 (FPSX9f5daf...) : connexion OK
-2025-09-18 07:22:11,000 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSX94e4a9... - possible clé invalide
-2025-09-18 07:22:11,000 - INFO - competition_waste_generator - Retry attempt 2/3 avec clé FPSX94e4a9..., waiting 2.2s...
-2025-09-18 07:22:13,657 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSX94e4a9... - possible clé invalide
-2025-09-18 07:22:13,658 - INFO - competition_waste_generator - Retry attempt 3/3 avec clé FPSX94e4a9..., waiting 4.4s...
-2025-09-18 07:22:18,568 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSX94e4a9... - possible clé invalide
-2025-09-18 07:22:18,569 - ERROR - competition_waste_generator - Erreurs 404 persistantes - marquage de la clé FPSX94e4a9... comme invalide
-2025-09-18 07:22:18,569 - WARNING - competition_waste_generator - Clé API FPSX94e4a9... marquée comme temporairement indisponible
-2025-09-18 07:22:18,569 - INFO - competition_waste_generator - Rotation vers la clé: FPSXb87eda...
-2025-09-18 07:22:18,569 - WARNING - competition_waste_generator - Clé API FPSX94e4a9... marquée comme temporairement indisponible
-2025-09-18 07:22:18,569 - INFO - competition_waste_generator - Rotation vers la clé: FPSXb87eda...
-2025-09-18 07:22:19,085 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSXb87eda... - possible clé invalide
-2025-09-18 07:22:19,086 - INFO - competition_waste_generator - Retry attempt 2/3 avec clé FPSXb87eda..., waiting 2.3s...
-2025-09-18 07:22:21,848 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSXb87eda... - possible clé invalide
-2025-09-18 07:22:21,849 - INFO - competition_waste_generator - Retry attempt 3/3 avec clé FPSXb87eda..., waiting 4.1s...
-2025-09-18 07:22:26,474 - WARNING - competition_waste_generator - Endpoint non trouvé (404) avec la clé FPSXb87eda... - possible clé invalide
-2025-09-18 07:22:26,475 - ERROR - competition_waste_generator - Erreurs 404 persistantes - marquage de la clé FPSXb87eda... comme invalide
-2025-09-18 07:22:26,475 - WARNING - competition_waste_generator - Clé API FPSXb87eda... marquée comme temporairement indisponible
-2025-09-18 07:22:26,475 - INFO - competition_waste_generator - Rotation vers la clé: FPSX9f5daf...
-2025-09-18 07:22:26,475 - WARNING - competition_waste_generator - Clé API FPSXb87eda... marquée comme temporairement indisponible
-2025-09-18 07:22:26,475 - INFO - competition_waste_generator - Rotation vers la clé: FPSX9f5daf...
-2025-09-18 07:22:26,971 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 07:22:32,230 - INFO - competition_waste_generator - ✓ Successfully generated image for sac_plastique
-2025-09-18 07:22:32,231 - INFO - competition_waste_generator - Generating image for: papier_blanc (recyclables/commerciale)
-2025-09-18 07:22:32,277 - INFO - competition_waste_generator - ✓ Generated: sac_plastique
-2025-09-18 07:22:34,001 - INFO - competition_waste_generator - Clé API 1 (FPSX9f5daf...) : connexion OK
-2025-09-18 07:22:40,746 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 07:22:44,047 - INFO - competition_waste_generator - ✓ Successfully generated image for papier_blanc
-2025-09-18 07:22:44,047 - INFO - competition_waste_generator - Generating image for: carton_propre (recyclables/commerciale)
-2025-09-18 07:22:44,110 - INFO - competition_waste_generator - ✓ Generated: papier_blanc
-2025-09-18 07:22:45,678 - INFO - competition_waste_generator - Clé API 1 (FPSX9f5daf...) : connexion OK
-2025-09-18 07:22:52,379 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
-2025-09-18 07:22:58,820 - INFO - competition_waste_generator - ✓ Successfully generated image for carton_propre
-2025-09-18 07:22:58,821 - INFO - competition_waste_generator - Generating image for: pile_batterie (dangereux/residentielle)
-2025-09-18 07:22:58,901 - INFO - competition_waste_generator - ✓ Generated: carton_propre
-2025-09-18 07:23:00,526 - INFO - competition_waste_generator - Clé API 1 (FPSX9f5daf...) : connexion OK
-2025-09-18 07:23:07,259 - INFO - competition_waste_generator - ✓ Image URL obtained: https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-3-0-t2i/0217...
+2025-09-18 22:35:41,563 - INFO - __main__ - API Key 1: FPSX94e4... loaded
+2025-09-18 22:35:41,564 - INFO - __main__ - API Key 2: FPSX9f5d... loaded
+2025-09-18 22:35:41,565 - INFO - __main__ - API Key 3: FPSXb87e... loaded
+2025-09-18 22:35:41,565 - INFO - __main__ - Initialized with 3 API keys for simultaneous use
+2025-09-18 22:35:41,566 - INFO - __main__ - PDF config: 354px images, 300 DPI
+2025-09-18 22:35:41,569 - INFO - __main__ - Loaded configuration: {'menagers': 42, 'recyclables': 42, 'dangereux': 43}
+2025-09-18 22:35:41,570 - INFO - __main__ - Initialized with 127 waste items
+2025-09-18 22:35:41,570 - INFO - __main__ - Distribution: {'menagers': 42, 'recyclables': 42, 'dangereux': 43}
+2025-09-18 22:35:41,571 - INFO - __main__ - ============================================================
+2025-09-18 22:35:41,571 - INFO - __main__ - COMPETITION WASTE DATASET GENERATOR - VERSION CORRIGÉE
+2025-09-18 22:35:41,572 - INFO - __main__ - ============================================================
+2025-09-18 22:35:41,573 - INFO - __main__ - Configuration: {'menagers': 42, 'recyclables': 42, 'dangereux': 43}
+2025-09-18 22:35:41,573 - INFO - __main__ - Total items: 127
+2025-09-18 22:35:41,574 - INFO - __main__ - Starting image generation...
+2025-09-18 22:35:41,575 - INFO - __main__ - Generating 127 new images...
+2025-09-18 22:35:41,575 - ERROR - __main__ - Generation failed: 'FreepikImageGenerator' object has no attribute 'generate_image'
+2025-09-18 22:37:16,564 - INFO - __main__ - API Key 1: FPSX94e4... loaded
+2025-09-18 22:37:16,564 - INFO - __main__ - API Key 2: FPSX9f5d... loaded
+2025-09-18 22:37:16,565 - INFO - __main__ - API Key 3: FPSXb87e... loaded
+2025-09-18 22:37:16,565 - INFO - __main__ - Initialized with 3 API keys for simultaneous use
+2025-09-18 22:37:16,566 - INFO - __main__ - PDF config: 354px images, 300 DPI
+2025-09-18 22:37:16,569 - INFO - __main__ - Loaded configuration: {'menagers': 42, 'recyclables': 42, 'dangereux': 43}
+2025-09-18 22:37:16,569 - INFO - __main__ - Initialized with 127 waste items
+2025-09-18 22:37:16,570 - INFO - __main__ - Distribution: {'menagers': 42, 'recyclables': 42, 'dangereux': 43}
+2025-09-18 22:37:16,570 - INFO - __main__ - ============================================================
+2025-09-18 22:37:16,571 - INFO - __main__ - COMPETITION WASTE DATASET GENERATOR - VERSION CORRIGÉE
+2025-09-18 22:37:16,571 - INFO - __main__ - ============================================================
+2025-09-18 22:37:16,572 - INFO - __main__ - Configuration: {'menagers': 42, 'recyclables': 42, 'dangereux': 43}
+2025-09-18 22:37:16,572 - INFO - __main__ - Total items: 127
+2025-09-18 22:37:16,573 - INFO - __main__ - Starting image generation...
+2025-09-18 22:37:16,574 - INFO - __main__ - Generating 127 new images...
+2025-09-18 22:37:16,613 - ERROR - __main__ - Exception solvant_industriel: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,613 - ERROR - __main__ - Exception papier_bureau_blanc: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,615 - ERROR - __main__ - Exception canette_the: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,616 - ERROR - __main__ - Exception carton_compacte: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,617 - ERROR - __main__ - Exception dechet_radioactif_faible: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,618 - ERROR - __main__ - Exception bouteille_verre_huile: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,619 - ERROR - __main__ - Exception pot_sauce: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,620 - ERROR - __main__ - Exception amiante_plaque: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,621 - ERROR - __main__ - Exception barquette_salade: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,622 - ERROR - __main__ - Exception sac_tissu: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,622 - ERROR - __main__ - Exception produit_jardinage: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,623 - ERROR - __main__ - Exception metal_zinc: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,623 - ERROR - __main__ - Exception sachet_sucre: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,624 - ERROR - __main__ - Exception dechet_medical_hopital: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,625 - ERROR - __main__ - Exception livre_papier: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,625 - ERROR - __main__ - Exception bouteille_eau_bureau: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,626 - ERROR - __main__ - Exception dechet_chimique_fût: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,626 - ERROR - __main__ - Exception chaussure_cuir: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,627 - ERROR - __main__ - Exception emballage_sandwich: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,627 - ERROR - __main__ - Exception plastique_PE_film: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,628 - ERROR - __main__ - Exception produit_colle_industriel: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,628 - ERROR - __main__ - Exception vetement_coton: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,629 - ERROR - __main__ - Exception canette_cafe: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,630 - ERROR - __main__ - Exception batterie_ups: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,630 - ERROR - __main__ - Exception gobelet_distributeur: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,631 - ERROR - __main__ - Exception carton_lait_propre: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,631 - ERROR - __main__ - Exception huile_vidange: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,632 - ERROR - __main__ - Exception barquette_viande: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,632 - ERROR - __main__ - Exception liquide_frein: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,633 - ERROR - __main__ - Exception boite_metal_propre: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,633 - ERROR - __main__ - Exception bouteille_huile: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,634 - ERROR - __main__ - Exception pile_alcaline: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,634 - ERROR - __main__ - Exception dechet_pharmaceutique: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,635 - ERROR - __main__ - Exception condensateur_pcb: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,635 - ERROR - __main__ - Exception magazine_propre: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,636 - ERROR - __main__ - Exception emballage_biscuit: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,637 - ERROR - __main__ - Exception disque_dur_defaillant: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,637 - ERROR - __main__ - Exception bocal_verre_propre: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,638 - ERROR - __main__ - Exception gobelet_cafe: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,638 - ERROR - __main__ - Exception batterie_telephone: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,639 - ERROR - __main__ - Exception plastique_PVC_tuyau: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,639 - ERROR - __main__ - Exception sachet_chips: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,640 - ERROR - __main__ - Exception bouteille_plastique_propre: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,640 - ERROR - __main__ - Exception solvant_bricolage: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,641 - ERROR - __main__ - Exception boite_conserve_tomate: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,641 - ERROR - __main__ - Exception bronze_industriel: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,642 - ERROR - __main__ - Exception boite_carton_propre: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,642 - ERROR - __main__ - Exception cartouche_imprimante: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,643 - ERROR - __main__ - Exception bouteille_lait: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,643 - ERROR - __main__ - Exception verre_industriel: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,644 - ERROR - __main__ - Exception canette_alu_propre: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,644 - ERROR - __main__ - Exception pot_yaourt: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,645 - ERROR - __main__ - Exception ampoule_led_cassee: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,645 - ERROR - __main__ - Exception plastique_PP_industriel: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,646 - ERROR - __main__ - Exception journal_propre: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,646 - ERROR - __main__ - Exception journal_quotidien: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,647 - ERROR - __main__ - Exception batterie_ordinateur: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,647 - ERROR - __main__ - Exception metal_inox: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,648 - ERROR - __main__ - Exception reste_fruit: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,648 - ERROR - __main__ - Exception bouteille_verre_vin: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,649 - ERROR - __main__ - Exception tube_neon_casse: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,649 - ERROR - __main__ - Exception papier_kraft_industriel: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,650 - ERROR - __main__ - Exception rouleau_carton: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,650 - ERROR - __main__ - Exception insecticide_aerosol: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,651 - ERROR - __main__ - Exception carton_ondule_industriel: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,651 - ERROR - __main__ - Exception boite_cereales: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,652 - ERROR - __main__ - Exception fût_metal_200L: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,653 - ERROR - __main__ - Exception canette_soda: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,653 - ERROR - __main__ - Exception ecran_lcd_casse: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,654 - ERROR - __main__ - Exception plastique_HDPE_industriel: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,654 - ERROR - __main__ - Exception caisse_plastique: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,655 - ERROR - __main__ - Exception medicament_expire: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,655 - ERROR - __main__ - Exception cuivre_fil: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,656 - ERROR - __main__ - Exception tuyau_plastique: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,656 - ERROR - __main__ - Exception sac_plastique_courses: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,657 - ERROR - __main__ - Exception produit_chimique_labo: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,657 - ERROR - __main__ - Exception bouteille_plastique_eau: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,658 - ERROR - __main__ - Exception aluminium_industriel: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,659 - ERROR - __main__ - Exception big_bag_vide: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,659 - ERROR - __main__ - Exception produit_nettoyage_vide: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,660 - ERROR - __main__ - Exception ferraille_acier: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,661 - ERROR - __main__ - Exception palette_bois_cassee: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,661 - ERROR - __main__ - Exception verre_bocal_1L: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,662 - ERROR - __main__ - Exception jerrycan_20L: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,662 - ERROR - __main__ - Exception huile_hydraulique: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,663 - ERROR - __main__ - Exception metal_conserve_grande: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,663 - ERROR - __main__ - Exception sangle_textile: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,664 - ERROR - __main__ - Exception peinture_pot_vide: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,664 - ERROR - __main__ - Exception plastique_transparent: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,665 - ERROR - __main__ - Exception carton_ondule_grand: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,665 - ERROR - __main__ - Exception batterie_vehicule_12V: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,666 - ERROR - __main__ - Exception emballage_carton_sec: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,666 - ERROR - __main__ - Exception bidon_huile_moteur: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,667 - ERROR - __main__ - Exception aerosol_vide: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,668 - ERROR - __main__ - Exception papier_journal_commercial: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,668 - ERROR - __main__ - Exception film_plastique_palette: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,669 - ERROR - __main__ - Exception bouteille_verre_biere: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,669 - ERROR - __main__ - Exception plomb_batterie_industriel: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,669 - ERROR - __main__ - Exception feuillard_acier: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,670 - ERROR - __main__ - Exception liquide_refroidissement: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,671 - ERROR - __main__ - Exception carton_pizza_propre: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,671 - ERROR - __main__ - Exception pesticide_industriel: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,672 - ERROR - __main__ - Exception sac_ciment: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,672 - ERROR - __main__ - Exception thermometre_mercure: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,673 - ERROR - __main__ - Exception metal_canette_grande: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,673 - ERROR - __main__ - Exception formaldehyde_industriel: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,673 - ERROR - __main__ - Exception bidon_eau_5L: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,674 - ERROR - __main__ - Exception cartouche_toner: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,674 - ERROR - __main__ - Exception plastique_rigide_propre: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,675 - ERROR - __main__ - Exception chrome_hexavalent: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,675 - ERROR - __main__ - Exception bouteille_smoothie: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,676 - ERROR - __main__ - Exception pile_bouton: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,677 - ERROR - __main__ - Exception verre_restaurant: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,677 - ERROR - __main__ - Exception pcb_transformateur: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,678 - ERROR - __main__ - Exception sachet_ketchup: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,678 - ERROR - __main__ - Exception bouteille_eau_propre: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,679 - ERROR - __main__ - Exception cyanure_industriel: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,679 - ERROR - __main__ - Exception gobelet_glace: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,680 - ERROR - __main__ - Exception produit_photographique: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,680 - ERROR - __main__ - Exception canette_boisson_propre: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,681 - ERROR - __main__ - Exception boite_pizza: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,681 - ERROR - __main__ - Exception mercure_industriel: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,682 - ERROR - __main__ - Exception chargeur_telephone: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,682 - ERROR - __main__ - Exception bouteille_jus: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,683 - ERROR - __main__ - Exception carton_emballage: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,683 - ERROR - __main__ - Exception acide_industriel: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,684 - ERROR - __main__ - Exception emballage_croissant: FreepikImageGenerator.generate_image_with_key() missing 1 required positional argument: 'assigned_key'
+2025-09-18 22:37:16,695 - INFO - __main__ - Generating PDFs...
+2025-09-18 22:37:16,696 - WARNING - __main__ - No images for category: menagers
+2025-09-18 22:37:16,697 - WARNING - __main__ - No images for category: recyclables
+2025-09-18 22:37:16,697 - WARNING - __main__ - No images for category: dangereux
+2025-09-18 22:37:16,701 - INFO - __main__ - ============================================================
+2025-09-18 22:37:16,702 - INFO - __main__ - GENERATION TERMINÉE AVEC UTILISATION SIMULTANÉE DES CLÉS!
+2025-09-18 22:37:16,706 - INFO - __main__ - ✓ Images: 0/127
+2025-09-18 22:37:16,707 - INFO - __main__ - ✓ PDFs: 0
+2025-09-18 22:37:16,708 - INFO - __main__ - ✓ Répartition: {'menagers': 0, 'recyclables': 0, 'dangereux': 0}
+2025-09-18 22:37:16,710 - INFO - __main__ - ✓ Temps: 0.1s
+2025-09-18 22:37:16,713 - INFO - __main__ - ✓ Clés API utilisées: 3
+2025-09-18 22:37:16,714 - INFO - __main__ - ============================================================
+2025-09-18 22:37:39,178 - INFO - __main__ - API Key 1: FPSX94e4... loaded
+2025-09-18 22:37:39,178 - INFO - __main__ - API Key 2: FPSX9f5d... loaded
+2025-09-18 22:37:39,179 - INFO - __main__ - API Key 3: FPSXb87e... loaded
+2025-09-18 22:37:39,179 - INFO - __main__ - Initialized with 3 API keys for simultaneous use
+2025-09-18 22:37:39,180 - INFO - __main__ - PDF config: 354px images, 300 DPI
+2025-09-18 22:37:39,184 - INFO - __main__ - Loaded configuration: {'menagers': 42, 'recyclables': 42, 'dangereux': 43}
+2025-09-18 22:37:39,185 - INFO - __main__ - Initialized with 127 waste items
+2025-09-18 22:37:39,185 - INFO - __main__ - Distribution: {'menagers': 42, 'recyclables': 42, 'dangereux': 43}
+2025-09-18 22:37:39,186 - INFO - __main__ - ============================================================
+2025-09-18 22:37:39,186 - INFO - __main__ - COMPETITION WASTE DATASET GENERATOR - VERSION CORRIGÉE
+2025-09-18 22:37:39,187 - INFO - __main__ - ============================================================
+2025-09-18 22:37:39,187 - INFO - __main__ - Configuration: {'menagers': 42, 'recyclables': 42, 'dangereux': 43}
+2025-09-18 22:37:39,188 - INFO - __main__ - Total items: 127
+2025-09-18 22:37:39,188 - INFO - __main__ - Starting image generation...
+2025-09-18 22:37:39,189 - INFO - __main__ - Generating 127 new images...
+2025-09-18 22:37:39,190 - ERROR - __main__ - Generation failed: 'FreepikImageGenerator' object has no attribute 'generate_image'
+2025-09-18 22:43:33,673 - INFO - __main__ - API Key 1: FPSX94e4... loaded
+2025-09-18 22:43:33,673 - INFO - __main__ - API Key 2: FPSX9f5d... loaded
+2025-09-18 22:43:33,674 - INFO - __main__ - API Key 3: FPSXb87e... loaded
+2025-09-18 22:43:33,674 - INFO - __main__ - Initialized with 3 API keys for simultaneous use
+2025-09-18 22:43:33,674 - INFO - __main__ - PDF config: 354px images, 300 DPI
+2025-09-18 22:43:33,675 - INFO - __main__ - Loaded configuration: {'menagers': 42, 'recyclables': 42, 'dangereux': 45}
+2025-09-18 22:43:33,675 - INFO - __main__ - Initialized with 129 waste items
+2025-09-18 22:43:33,675 - INFO - __main__ - Distribution: {'menagers': 42, 'recyclables': 42, 'dangereux': 45}
+2025-09-18 22:43:33,675 - INFO - __main__ - ============================================================
+2025-09-18 22:43:33,675 - INFO - __main__ - COMPETITION WASTE DATASET GENERATOR - VERSION CORRIGÉE
+2025-09-18 22:43:33,676 - INFO - __main__ - ============================================================
+2025-09-18 22:43:33,676 - INFO - __main__ - Configuration: {'menagers': 42, 'recyclables': 42, 'dangereux': 45}
+2025-09-18 22:43:33,676 - INFO - __main__ - Total items: 129
+2025-09-18 22:43:33,676 - INFO - __main__ - Starting image generation...
+2025-09-18 22:43:33,676 - INFO - __main__ - Generating 129 new images...
+2025-09-18 22:43:33,677 - INFO - __main__ - [Key FPSX94e4...] Generating: bouteille_plastique_eau
+2025-09-18 22:43:33,678 - INFO - __main__ - [Key FPSX94e4...] Generating: sac_plastique_courses
+2025-09-18 22:43:46,302 - INFO - __main__ - [Key FPSX94e4...] ✓ sac_plastique_courses
+2025-09-18 22:43:46,303 - INFO - __main__ - [Key FPSX9f5d...] Generating: canette_soda
+2025-09-18 22:43:46,313 - INFO - __main__ - ✓ sac_plastique_courses
+2025-09-18 22:43:46,664 - INFO - __main__ - [Key FPSX94e4...] ✓ bouteille_plastique_eau
+2025-09-18 22:43:46,666 - INFO - __main__ - [Key FPSX9f5d...] Generating: boite_cereales
+2025-09-18 22:43:46,700 - INFO - __main__ - ✓ bouteille_plastique_eau
+2025-09-18 22:43:57,980 - INFO - __main__ - [Key FPSX9f5d...] ✓ canette_soda
+2025-09-18 22:43:57,981 - INFO - __main__ - [Key FPSXb87e...] Generating: reste_fruit
+2025-09-18 22:43:58,019 - INFO - __main__ - [Key FPSX9f5d...] ✓ boite_cereales
+2025-09-18 22:43:58,021 - INFO - __main__ - [Key FPSXb87e...] Generating: journal_quotidien
+2025-09-18 22:44:09,577 - INFO - __main__ - [Key FPSXb87e...] ✓ reste_fruit
+2025-09-18 22:44:09,580 - INFO - __main__ - [Key FPSXb87e...] Generating: pot_yaourt
+2025-09-18 22:44:09,626 - INFO - __main__ - [Key FPSXb87e...] ✓ journal_quotidien
+2025-09-18 22:44:09,633 - INFO - __main__ - [Key FPSX94e4...] Generating: bouteille_lait
+2025-09-18 22:44:20,939 - INFO - __main__ - [Key FPSXb87e...] ✓ pot_yaourt
+2025-09-18 22:44:20,941 - INFO - __main__ - [Key FPSX94e4...] Generating: boite_conserve_tomate
+2025-09-18 22:44:21,598 - INFO - __main__ - [Key FPSX94e4...] ✓ bouteille_lait
+2025-09-18 22:44:21,600 - INFO - __main__ - [Key FPSX9f5d...] Generating: sachet_chips
